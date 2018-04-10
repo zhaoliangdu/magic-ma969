@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.TowerMapper">
+	<insert id="addTower" parameterType="com.ma969.beans.Tower" useGeneratedKeys="true" keyProperty="towerId">
+		INSERT INTO
+		tower_config(ttype,framework,report)
+		VALUES(#{towerType},#{towerFramework},#{towerReport});
+	</insert>
+	<update id="updateTower" parameterType="com.ma969.beans.Tower">
+		update tower_config set
+		ttype=#{towerType},framework=#{towerFramework},report=#{towerReport}
+		where tid=#{towerId};
+	</update>
+	<delete id="deleteTower" parameterType="int">
+		delete from tower_config WHERE tid=#{towerId};
+	</delete>
+	<update id="updateTstate" parameterType="int">
+		update tower_config set tstate=1 where tid=#{towerId};
+	</update>
+</mapper>

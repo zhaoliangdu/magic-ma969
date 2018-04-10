@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.TvSignalMapper">
+	<resultMap type="com.ma969.beans.TvSignal" id="tvsignalMap">
+		<id property="id" column="id" />
+		<result property="area" column="area" />
+		<result property="longitude" column="longitude" />
+		<result property="latitude" column="latitude" />
+		<result property="machineModel" column="machine_model" />
+		<result property="chargePerson" column="charge_person" />
+		<result property="transmitName" column="transmitName" />
+	</resultMap>
+	<select id="listTVSignals" resultMap="tvsignalMap">
+		select * from tv_signal;
+	</select>
+	<insert id="saveTVSignal" parameterType="com.ma969.beans.TvSignal">
+		insert into tv_signal
+		(area,longitude,latitude,machine_model,charge_person,transmitName)
+		values
+		(#{area},#{longitude},#{latitude},#{machineModel},#{chargePerson},#{transmitName});
+	</insert>
+	<update id="updateTVSignal" parameterType="com.ma969.beans.TvSignal">
+		update tv_signal
+		<trim prefix="set" suffixOverrides=",">
+			<if test="area!=null or area!=''">area=#{area},</if>
+			<if test="longitude!=null or longitude!=''">longitude=#{longitude},</if>
+			<if test="latitude!=null or latitude!=''">latitude=#{latitude},</if>
+			<if test="machineModel!=null or machineModel!=''">machine_model=#{machineModel},</if>
+			<if test="chargePerson!=null or chargePerson!=''">charge_person=#{chargePerson},</if>
+			<if test="transmitName!=null or transmitName!=''">transmitName=#{transmitName}</if>
+		</trim>
+		where id = #{id};
+	</update>
+	<select id="findTVSignalById" parameterType="int" resultMap="tvsignalMap">
+		select * from tv_signal where id=#{id};
+	</select>
+	<delete id="deleteTVSignal" parameterType="int">
+		delete from tv_signal
+		where id=#{id};
+	</delete>
+</mapper>

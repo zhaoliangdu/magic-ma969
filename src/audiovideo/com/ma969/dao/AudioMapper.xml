@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.AudioMapper">
+	<resultMap type="com.ma969.beans.Audio" id="audioMap">
+		<id property="id" column="id" />
+		<result property="importDate" column="import_date" />
+		<result property="audioName" column="audio_name" />
+		<result property="audioPath" column="audio_path" />
+		<result property="eid" column="eid" />
+		<result property="transmitName" column="emitterName" />
+	</resultMap>
+	<select id="listAudioData" resultMap="audioMap">
+		select
+		id,import_date,audio_name,audio_path,emitter_station.emitterName from
+		audio,emitter_station where audio.eid=emitter_station.eid;
+	</select>
+	<insert id="saveAudioData" parameterType="com.ma969.beans.Audio">
+		insert into audio
+		(import_date,audio_name,audio_path,eid) values
+		(#{importDate},#{audioName},#{audioPath},#{eid});
+	</insert>
+
+	<select id="findById" parameterType="int" resultType="String">
+		select audio_name
+		from audio where id=#{id};
+	</select>
+	<select id="findByFileName" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM audio WHERE audio_name=#{audioName};
+	</select>
+	<delete id="deleteAudioData" parameterType="int">
+		delete from audio where
+		id =#{id};
+	</delete>
+</mapper>

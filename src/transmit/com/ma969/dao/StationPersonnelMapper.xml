@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.StationPersonnelMapper">
+	<insert id="addStationPersonnel" parameterType="com.ma969.beans.StationPersonnel"
+		useGeneratedKeys="true" keyProperty="stationPersonId">
+		INSERT INTO
+		people_config(supervisor,testPerson,supervisonRules)
+		VALUES(#{supervisor},#{testPeople},#{responsiblePerson});
+	</insert>
+	<update id="updateStationPersonnel" parameterType="com.ma969.beans.StationPersonnel">
+		UPDATE
+		people_config SET
+		supervisor=#{supervisor},testPerson=#{testPeople},supervisonRules=#{responsiblePerson}
+		WHERE pid=#{stationPersonId};
+	</update>
+	<delete id="deleteStationPersonnel" parameterType="int">
+		delete from
+		people_config WHERE pid=#{stationPersonId};
+	</delete>
+	<update id="updatepstate" parameterType="int">
+		update people_config set
+		pstate=1 where pid = #{stationPersonId};
+	</update>
+</mapper>

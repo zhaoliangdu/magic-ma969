@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.TransmitMapper">
+	<resultMap type="com.ma969.beans.Transmit" id="transmitMap">
+		<id column="eid" property="transmitId" />
+		<result column="aid" property="antennaId" />
+		<result column="rid" property="roomId" />
+		<result column="tid" property="towerId" />
+		<result column="area" property="area" />
+		<result column="pid" property="stationPersonId" />
+		<result column="emitterName" property="tName" />
+		<result column="Latitude" property="latitude" />
+		<result column="Longitude" property="longitude" />
+		<result column="Height" property="height" />
+		<result column="last_upt" property="lastUpt" />
+		<result column="last_upname" property="lastUpName" />
+
+	</resultMap>
+	<select id="listTransmits" resultMap="transmitMap">
+		select * from
+		emitter_station;
+	</select>
+	<select id="findById" resultMap="transmitMap" parameterType="int">
+		select * from emitter_station where eid = #{transmitId};
+	</select>
+	<select id="getTransmitName" resultType="int" parameterType="map">
+		select eid from emitter_station where Longitude=#{longitude}
+		and
+		Latitude = #{latitude}
+	</select>
+	<insert id="saveTransmit" parameterType="com.ma969.beans.Transmit"
+		useGeneratedKeys="true" keyProperty="transmitId">
+		INSERT INTO
+		emitter_station(aid,rid,tid,pid,area,emitterName,Latitude,Longitude,Height,last_upt,last_upname)
+		VALUES(#{antennaId},#{roomId},#{towerId},#{stationPersonId},#{area},#{tName},#{latitude},#{longitude},#{height},#{lastUpt},#{lastUpName});
+	</insert>
+	<update id="updateTransmit" parameterType="com.ma969.beans.Transmit">
+		UPDATE emitter_station
+		SET
+		emitterName=#{tName},area=#{area},Latitude=#{latitude},Longitude=#{longitude},Height=#{height},last_upt=#{lastUpt},last_upname=#{lastUpName}
+		WHERE eid=#{transmitId};
+	</update>
+	<delete id="deleteTransmit" parameterType="int">
+		delete from
+		emitter_station where eid=#{transmitId};
+	</delete>
+</mapper>

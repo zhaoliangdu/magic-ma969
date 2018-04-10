@@ -1,0 +1,6 @@
+<Context debug="0" docBase="D:\magic-ma969\" path="/audio" reloadable="true"/>
+				<Context debug="0" docBase="D:\magic-ma969\" path="/video" reloadable="true"/>
+				<Context debug="0" docBase="D:\magic-ma969\log\" path="/log" reloadable="true"/>
+				<Context docBase="D:\magic-ma969\temp\transmit\" path="/transmit" reloadable="true"/>
+				<Context docBase="D:\magic-ma969\temp\pointdata\" path="/pointdata" reloadable="true"/> 
+				<Context docBase="D:\magic-ma969\tuling\" path="/tulingsay" reloadable="true"/> 

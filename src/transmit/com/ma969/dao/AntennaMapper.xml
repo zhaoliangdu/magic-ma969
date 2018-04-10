@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.AntennaMapper">
+	<select id="findById" resultType="com.ma969.beans.Antenna">
+		select * from antenna_config
+		where aid = #{antennaId};
+	</select>
+	<insert id="addAntenna" parameterType="com.ma969.beans.Antenna"
+		useGeneratedKeys="true" keyProperty="antennaId">
+		INSERT INTO
+		antenna_config(atype,programSource,fieldPattern,installPlan)
+		VALUES(#{antennaType},#{programSource},#{fieldPattern},#{installPlan});
+	</insert>
+	<update id="updateAntenna" parameterType="com.ma969.beans.Antenna">
+		UPDATE antenna_config
+		SET
+		ATYPE=#{antennaType},programSource=#{programSource},fieldPattern=#{fieldPattern},installPlan=#{installPlan}
+		WHERE aid=#{antennaId};
+	</update>
+	<delete id="deleteAntenna" parameterType="int">
+		delete from antenna_config where aid=#{antennaId};
+	</delete>
+	<update id="updateAstate" parameterType="int">
+		update antenna_config set astate=1 where aid=#{antennaId};
+	</update>
+</mapper>

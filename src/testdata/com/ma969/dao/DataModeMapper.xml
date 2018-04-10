@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.DataModeMapper">
+	<resultMap type="com.ma969.beans.DataMode" id="dataModeMap">
+		<id property="id" column="id" />
+		<result property="testMode" column="tesMode" />
+	</resultMap>
+	<select id="getDataMode" parameterType="int" resultType="string">
+		select
+		testMode from data_model where id = #{id}
+	</select>
+	<select id="listDataModes" resultType="com.ma969.beans.DataMode">
+		SELECT testMode FROM
+		data_model WHERE id>1 AND id &lt; 4;
+	</select>
+</mapper>

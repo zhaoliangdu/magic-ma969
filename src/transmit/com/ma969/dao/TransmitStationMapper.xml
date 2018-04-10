@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.TransmitStationMapper">
+	<resultMap type="com.ma969.beans.TransmitStation" id="transmitStationMap">
+		<id property="transmitId" column="eid" />
+		<result property="tName" column="emitterName" />
+		<result property="area" column="area" />
+		<result property="latitude" column="Latitude" />
+		<result property="longitude" column="Longitude" />
+		<result property="height" column="Height" />
+		<result property="aId" column="aid" />
+		<result property="antennaType" column="atype" />
+		<result property="programSource" column="programSource" />
+		<result property="fieldPattern" column="fieldPattern" />
+		<result property="installPlan" column="installPlan" />
+		<result property="supervisor" column="supervisor" />
+		<result property="testPeople" column="testPerson" />
+		<result property="responsiblePerson" column="supervisonRules" />
+		<result property="roomPosition" column="position" />
+		<result property="roomDeviceStatus" column="deviceStatus" />
+		<result property="powerDistribution" column="powerDistribution" />
+		<result property="grounding" column="grounding" />
+		<result property="airConditioner" column="airConditioner" />
+		<result property="towerType" column="ttype" />
+		<result property="towerFramework" column="framework" />
+		<result property="towerReport" column="report" /> 
+		<result property="lastUpt" column="last_upt"/>
+		<result property="lastUpName" column="last_upname"/>
+	</resultMap> 
+	<select id="findByTransmitId" resultMap="transmitStationMap"
+		parameterType="int">
+		SELECT
+		a.aid,eid,emitterName,area,Latitude,Longitude,Height,a.atype,programSource,fieldPattern,installPlan,supervisor,testPerson,supervisonRules,POSITION,powerDistribution,grounding,deviceStatus,airConditioner,t.ttype,framework,report,last_upt,last_upname
+		FROM emitter_station e,antenna_config a,tower_config t,room_config
+		r,people_config p WHERE e.aid=a.aid
+		AND e.tid=t.tid AND e.rid=r.rid AND
+		e.pid=p.pid AND e.eid = #{transmitId}; 
+	</select>
+	<select id="listTransmitStation" resultMap="transmitStationMap">
+		SELECT eid,emitterName,AREA,Latitude,Longitude,Height,a.aid,a.atype,programSource,fieldPattern,installPlan,p.pid,supervisor,testPerson,supervisonRules,POSITION,r.rid,powerDistribution,grounding,deviceStatus,airConditioner,t.tid,t.ttype,framework,report,last_upt,last_upname
+		FROM emitter_station e,antenna_config a,tower_config t,room_config
+		r,people_config p WHERE e.aid=a.aid
+		AND e.tid=t.tid AND e.rid=r.rid AND
+		e.pid=p.pid
+	</select>
+	<select id="findByParam" parameterType="map" resultMap="transmitStationMap">
+		SELECT DISTINCT
+		eid,antenna_config.aid,emitterName,area,Latitude,Longitude,Height,atype,programSource,fieldPattern,installPlan,supervisor,testPerson,supervisonRules,POSITION,powerDistribution,grounding,deviceStatus,airConditioner,ttype,framework,report
+		FROM emitter_station ,antenna_config ,tower_config ,room_config
+		,people_config WHERE emitter_station.aid=antenna_config.aid AND
+		emitter_station.tid=tower_config.tid AND
+		emitter_station.rid=room_config.rid AND
+		emitter_station.pid=people_config.pid
+		<if test="tName!=null and tName!=''">
+			and emitterName like #{tName}
+		</if>
+		<if test="lat!=null and lat!='' and lon!=null and lon!=''">
+			and Latitude = #{lat} and Longitude = #{lon}
+		</if>
+		<if test="atype!=null and atype!=''">
+			and atype like #{atype}
+		</if>
+		<if test="ttype!=null and ttype!=''">
+			and ttype like #{ttype}
+		</if>
+	</select>
+</mapper>

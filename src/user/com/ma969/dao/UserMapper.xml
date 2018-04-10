@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.UserMapper">
+	<resultMap type="com.ma969.beans.User" id="userMap">
+		<id property="userId" column="id" />
+		<result property="auth" column="auth" />
+		<result property="userName" column="userName" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="userAddress" column="address" />
+		<result property="userBirthday" column="birthdate" />
+		<result property="userPhone" column="phone" />
+		<result property="userCompany" column="department" />
+		<result property="ustate" column="ustate" /> 
+		<result property="createTime" column="create_time" />
+		<result property="lastLoginTime" column="lastlogin_time" />
+	</resultMap>
+	<select id="getUsers" resultMap="userMap">
+		select * from user where ustate=1;
+	</select>
+	<insert id="addUser" parameterType="com.ma969.beans.User"
+		useGeneratedKeys="true" keyProperty="userId">
+		insert into user
+		(auth,userName,password,name,address,birthdate,phone,department,create_time)
+		values(#{auth},#{userName},#{password},#{name},#{userAddress},#{userBirthday},#{userPhone},#{userCompany},#{createTime});
+	</insert>
+	<select id="countOnline" resultType="int">
+		SELECT COUNT(*) FROM USER
+		WHERE ustate=1;
+	</select>
+	<select id="findByName" parameterType="string" resultMap="userMap">
+		select
+		* from user where userName = #{userName} and ustate=1;
+	</select>
+	<select id="findById" parameterType="int" resultMap="userMap">
+		select *
+		from user where id =#{userId} and ustate=1;
+	</select>
+	<update id="updateUser" parameterType="com.ma969.beans.User">
+		update user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="userName!=null or userName!=''">userName=#{userName},</if> 
+			<if test="name!=null or name!=''">name=#{name},</if>
+			<if test="auth!=null or auth!=''">auth=#{auth},</if>
+			<if test="userAddress!=null or userAddress!=''">address=#{userAddress},</if>
+			<if test="userBirthday!=null or userBirthday!=''">birthdate=#{userBirthday},</if>
+			<if test="userPhone!=null or userPhone!=''">phone=#{userPhone},</if>
+			<if test="userCompany!=null or userCompany!=''">department=#{userCompany}</if>
+		</trim>
+		where id = #{userId};
+	</update>
+	<update id="updatePwd" parameterType="com.ma969.beans.User">
+		update user set password=#{password}  where id = #{userId};
+	</update>
+	<delete id="deleteUser" parameterType="int">
+		update user set ustate=0
+		where id=#{userId};
+	</delete>
+	<select id="blackList" resultMap="userMap">
+		select * from user where
+		ustate=0;
+	</select>
+	<update id="userRecovery" parameterType="java.util.List">
+		UPDATE USER SET ustate=1
+		WHERE id=#{userId};
+	</update>
+
+	<select id="getlastLoginTime" parameterType="int" resultType="string">
+		select lastlogin_time from user where id = #{userId}
+	</select>
+	<select id="getCreateTime" parameterType="int" resultType="string">
+		select create_time from user where id = #{userId}
+	</select>
+	<update id="updateLoginTime" parameterType="java.util.Map">
+		update user set
+		lastlogin_time=#{lastLoginTime} where id =#{userId}
+	</update>
+</mapper>

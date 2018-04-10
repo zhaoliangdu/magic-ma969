@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.ma969.dao.VideoMapper">
+	<resultMap type="com.ma969.beans.Video" id="videoMap">
+		<id property="id" column="id" />
+		<result property="importDate" column="import_date" />
+		<result property="videoName" column="video_name" />
+		<result property="videoPath" column="video_path" />
+		<result property="eid" column="eid" />
+		<result property="transmitName" column="emitterName" />
+	</resultMap>
+	<select id="listVideoData" resultMap="videoMap">
+		select
+		id,import_date,video_name,video_path,emitter_station.emitterName,emitter_station.eid
+		from video,emitter_station where
+		video.eid=emitter_station.eid;
+	</select>
+	<insert id="saveVideoData" parameterType="com.ma969.beans.Video">
+		insert into video
+		(import_date,video_name,video_path,eid) values
+		(#{importDate},#{videoName},#{videoPath},#{eid});
+	</insert> 
+	<select id="findById" parameterType="int" resultType="string">
+		select video_name
+		from video where id=#{id};
+	</select>
+	<select id="findByFileName" parameterType="string" resultType="int">
+		select count(*) from video where video_name=#{videoName};
+	</select>
+	<delete id="deleteVideoData" parameterType="int">
+		delete from video where
+		id = #{id};
+	</delete>
+</mapper>

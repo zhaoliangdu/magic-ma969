@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 借口全类名 -->
+<mapper namespace="com.ma969.dao.ChannelMapper"> 
+	<select id="getChannels" resultType="com.ma969.beans.Channel"
+		parameterType="int">
+		select cid,channel from channel where aid = #{aid};
+	</select>
+	<insert id="addChannel" parameterType="com.ma969.beans.Channel"
+		useGeneratedKeys="true" keyProperty="channelId">
+		INSERT INTO
+		channel(aid,channel)
+		VALUES(#{aId},#{channel});
+	</insert>
+	<select id="findByChannel" parameterType="string"
+		resultType="com.ma969.beans.Channel">
+		select * from channel where channel=#{channel};
+	</select>
+	<delete id="deleteChannel" parameterType="string">
+		DELETE FROM channel
+		WHERE channel=#{channel};
+	</delete>
+	<delete id="deleteChannelById" parameterType="int">
+		delete from channel where aid = #{aId}
+	</delete>
+	<update id="updateCstate" parameterType="int">
+		update channel set cstate=1 where aid=#{aId};
+	</update>
+</mapper>

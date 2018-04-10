@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 借口全类名 -->
+<mapper namespace="com.ma969.dao.FrequencyMapper">
+	
+	<select id="getFrequencys" resultType="com.ma969.beans.Frequency"
+		parameterType="int">
+		select fid,frequency from frequency where aid = #{aid};
+	</select>
+	<insert id="addFrequency" parameterType="com.ma969.beans.Frequency"
+		useGeneratedKeys="true" keyProperty="fid">
+		INSERT INTO
+		frequency(aid,frequency)
+		VALUES(#{aid},#{frequency});
+	</insert>
+	<select id="findByFrequency" parameterType="float" resultType="com.ma969.beans.Frequency">
+		select * from frequency where frequency=#{frequency};
+	</select>
+	<delete id="deleteFrequency" parameterType="float">
+		DELETE FROM frequency
+		WHERE frequency=#{frequency};
+	</delete>
+	<delete id="deleteFrequencyById" parameterType="int">
+		delete from frequency where aid = #{aId}
+	</delete>
+	<update id="updateFstate" parameterType="int">
+		update frequency set fstate=1 where aid=#{aid};
+	</update>
+</mapper>

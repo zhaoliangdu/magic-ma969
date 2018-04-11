@@ -53,6 +53,7 @@ public class DigitalDataController {
 		String area = (String) smap.get("area");
 		String pageNumrStr = (String) smap.get("pageNumr");
 		String frequency = (String) smap.get("frequency");
+		
 		Map<String, Object> paramMap = new HashMap<>(16);
 		paramMap.put("startTime", parStartTime);
 		paramMap.put("endTime", parEndTime);
@@ -69,6 +70,7 @@ public class DigitalDataController {
 		pageNum += count % pageNumr > 0 ? 1 : 0;
 		paramMap.put("pageNo", (pageNo - 1) * pageNumr);
 		paramMap.put("pageNumr", pageNumr);
+		
 		List<DigitalData> digitaldatas = digitalDataService.listDigitalDataByParam(paramMap);
 		return new ModelAndView("jsp/data/digitaldata").addObject("digitaldatas", digitaldatas)
 				.addObject("pageNo", pageNo).addObject("pageNum", pageNum).addObject("count", count)

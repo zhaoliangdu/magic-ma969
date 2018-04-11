@@ -40,12 +40,13 @@ public class AnalogDataController {
 	 */
 	@RequestMapping("analogdata")
 	public ModelAndView analogData(@RequestParam Map<String, Object> smap) throws Exception {
-
+		//获取参数
 		String parStartTime = (String) smap.get("startTime");
 		String parEndTime = (String) smap.get("endTime");
 		String area = (String) smap.get("area");
 		String pageNumrStr = (String) smap.get("pageNumr");
 		String frequency = (String) smap.get("frequency");
+		//封装参数
 		Map<String, Object> paramMap = new HashMap<>(16);
 		paramMap.put("startTime", parStartTime);
 		paramMap.put("endTime", parEndTime);
@@ -53,7 +54,7 @@ public class AnalogDataController {
 		paramMap.put("frequency", frequency);
 		paramMap.put("testModeId", 5);
 		paramMap.put("pageNumr", pageNumrStr);
-		String pageNoStr = (String) smap.get("pageNo");
+		String pageNoStr = (String) smap.get("pageNo"); 
 		int count = analogDataService.getCount(paramMap);
 		int pageNo = Help.isEmpty(pageNoStr) ? 1 : Integer.parseInt(pageNoStr);
 		int pageNumr = Help.isEmpty(pageNumrStr) ? 10 : Integer.parseInt(pageNumrStr);
@@ -62,7 +63,9 @@ public class AnalogDataController {
 		pageNum += count % pageNumr > 0 ? 1 : 0;
 		paramMap.put("pageNo", (pageNo - 1) * pageNumr);
 		paramMap.put("pageNumr", pageNumr);
+		//查询结果
 		List<AnalogData> analogdatas = analogDataService.listAnalogDataByParam(paramMap);
+		//返回页面
 		return new ModelAndView("jsp/data/analogdata").addObject("analogdatas", analogdatas).addObject("pageNo", pageNo)
 				.addObject("pageNum", pageNum).addObject("count", count).addObject("stTime", smap.get("startTime"))
 				.addObject("enTime", smap.get("endTime")).addObject("sareas", smap.get("area"))
@@ -71,7 +74,7 @@ public class AnalogDataController {
 	}
 
 	/**
-	 * 删除数字电视数据
+	 * 删除模拟电视数据
 	 * 
 	 * @param id
 	 * @param response
@@ -88,7 +91,7 @@ public class AnalogDataController {
 	}
 
 	/**
-	 * 导出数字电视数据
+	 * 导出模拟电视数据
 	 * 
 	 * @param type
 	 * @param response

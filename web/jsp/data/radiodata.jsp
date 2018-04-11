@@ -19,21 +19,23 @@
 				<div class="layui-form-item" style="display: inline-block;">
 					<label class="layui-form-label xbs768">日期范围</label>
 					<div class="layui-input-inline xbs768">
-						<input class="layui-input" placeholder="开始日" id="date_s">
+						<input class="layui-input" placeholder="开始日" id="date_s" name="startTime" value="${stTime }"> 
 					</div>
 					<div class="layui-input-inline xbs768">
-						<input class="layui-input" placeholder="截止日" id="date_e">
+						<input class="layui-input" placeholder="截止日" id="date_e" name="endTime" value="${enTime }">
 					</div>
 					<div class="layui-input-inline">
-						<input type="text" name="username" placeholder="请输入地区"
-							autocomplete="off" class="layui-input">
+						<input type="text" name="area" placeholder="请输入地区"
+							autocomplete="off" class="layui-input" value="${sareas }">
 					</div>
 					<div class="layui-input-inline">
-						<input type="text" name="username" placeholder="请输入频率"
-							autocomplete="off" class="layui-input">
+						<input type="text" name="frequency" placeholder="请输入频率"
+							autocomplete="off" class="layui-input" value="${sfrequencys }">
 					</div>
 					<div class="layui-input-inline">
-						<select class="layui-input"><option>请选择模式</option></select>
+						<select class="layui-input" name="testModeId"><option>请选择模式</option>
+							<option value="2">调幅</option>
+							<option value="3">调频</option></select>
 					</div>
 					<div class="layui-input-inline" style="width: 80px">
 						<button class="layui-btn layui-btn-normal" lay-filter="sreach">
@@ -109,7 +111,7 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-			 
+
 		</table>
 		<c:choose>
 			<c:when test="${pageNum<8}">

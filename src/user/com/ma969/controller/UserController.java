@@ -14,7 +14,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,13 +54,12 @@ public class UserController {
 	@RequestMapping("userlogin")
 	public RedirectView login(@RequestParam("username") String uname, @RequestParam("password") String upwd,
 			HttpServletRequest request) {
-		System.err.println("login-name:" + uname + "，time:" + LocalDateTime.now().toLocalTime().toString());
 		LOG.info("login-name:" + uname + "，time:" + LocalDateTime.now().toLocalTime().toString());
 		HttpSession session = request.getSession();
 		User user = service.findUserByName(uname);
 		if (!Help.isEmpty(user)) {
-			if (service.userLogin(uname, upwd)) {
-				String ipAddr = getIpAddr(request);
+			if (uname.equals(user.getUserName()) && Sha.getResult(uname + upwd).equals(user.getPassword())) {
+				String ipAddr = service.getIpAddr(request);
 				session.setAttribute("ipAddr", ipAddr);
 				session.setAttribute("loginuser", user);
 				HashMap<String, Object> map = new HashMap<>(16);
@@ -69,8 +67,8 @@ public class UserController {
 				map.put("lastLoginTime", LocalDateTime.now().toString());
 				System.err.println("登录成功");
 				service.updateLastLoginTime(map);
-				String lastLoginTime = service.getLastLoginTime(user.getUserId());
-				String logintime = lastLoginTime != null ? lastLoginTime.substring(0, lastLoginTime.length() - 2)
+				String logintime = user.getLastLoginTime() != null
+						? user.getLastLoginTime().substring(0, user.getLastLoginTime().length() - 2)
 						: LocalDateTime.now().toString().substring(0, LocalDateTime.now().toString().length() - 2);
 				String createTime = service.getCreateTime(user.getUserId());
 				session.setAttribute("createtime", createTime.substring(0, createTime.length() - 2));
@@ -79,8 +77,8 @@ public class UserController {
 				session.setAttribute("authDesc", Auth.getAuther(user.getAuth()));
 				session.setAttribute("auth", user.getAuth());
 				session.setAttribute("uid", user.getUserId());
+
 				List<Map<String, Object>> pointStatistics = testDataService.getPointStatistics();
-				System.err.println("pointStatistics:"+pointStatistics);
 				session.setAttribute("pointstatistics", pointStatistics);
 				return new RedirectView("index");
 			}
@@ -89,20 +87,6 @@ public class UserController {
 			session.setAttribute("loginmsg", "账号不存在或已禁用！");
 		}
 		return new RedirectView("login");
-	}
-
-	public String getIpAddr(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-		}
-		return ip;
 	}
 
 	/**

@@ -48,13 +48,14 @@
 	color: #fff;
 	font-size: 14px;
 }
+
 #lnglat {
 	position: absolute;
 	z-index: 9999;
 	top: 0;
 	left: 0;
 	padding: 3px 10px;
-	background: red;
+	background: #6699ff;
 	color: #fff;
 	font-size: 14px;
 }
@@ -62,12 +63,12 @@
 <!-- bgcolor="#004080" -->
 </head>
 <body ondragstart="window.event.returnValue=false"
-	oncontextmenu="window.event.returnValue=false" >
+	oncontextmenu="window.event.returnValue=false">
 	<!-- 顶部开始 -->
 	<div class="container">
 		<div class="logo">
-			<a href="index">宝盈科技车载移动数据云端在线管理系统和数据分析管理软件【MA969YDYZM-S】V1.0</a><img src="resource/images/logo.gif"
-				title="北京宝盈科技" width="125" />
+			<a href="index">宝盈科技车载移动数据云端在线管理系统和数据分析管理软件【MA969YDYZM-S】V1.0</a><img
+				src="resource/images/logo.gif" title="北京宝盈科技" width="120" />
 		</div>
 		<div class="open-nav">
 			<i class="iconfont">&#xe699;</i>
@@ -134,7 +135,7 @@
 					tpwidget("show");
 				</script>
 			</div>
-			<span id="time" style="color:#ffffff;"></span>
+			<span id="time" style="color: #ffffff;"></span>
 		</div>
 	</div>
 	<script>

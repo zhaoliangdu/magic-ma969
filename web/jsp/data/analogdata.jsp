@@ -53,8 +53,7 @@
 		</xblock>
 		<table class="layui-table">
 			<thead>
-				<tr>
-
+				<tr> 
 					<th>ID</th>
 					<th>时间</th>
 					<th>地区</th>

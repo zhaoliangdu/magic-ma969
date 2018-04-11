@@ -1,5 +1,5 @@
 package com.ma969.controller;
- 
+
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +61,7 @@ public class MapController {
 		Gson gson = new Gson();
 		List<List<TreeMap<String, Float>>> points = tservice.getFieldOverlay(uid, testModeId);
 		String json = gson.toJson(points);
-		 
+
 		writer.println(json);
 		writer.flush();
 		writer.close();
@@ -84,7 +84,7 @@ public class MapController {
 		Map<String, Float> fieldRectangle = tservice.getFieldRectangle(testmodeId);
 		Gson gson = new Gson();
 		String json = gson.toJson(fieldRectangle);
-	 
+
 		writer.println(json);
 		writer.flush();
 		writer.close();

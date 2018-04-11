@@ -20,22 +20,24 @@
 				<div class="layui-form-item" style="display: inline-block;">
 					<label class="layui-form-label xbs768">日期范围</label>
 					<div class="layui-input-inline xbs768">
-						<input class="layui-input" placeholder="开始日" id="date_s">
+						<input class="layui-input" placeholder="开始日" id="date_s"
+							name="startTime" value="${stTime }">
 					</div>
 					<div class="layui-input-inline xbs768">
-						<input class="layui-input" placeholder="截止日" id="edate_e">
+						<input class="layui-input" placeholder="截止日" id="date_e"
+							name="endTime" value="${enTime }">
 					</div>
 					<div class="layui-input-inline">
-						<input type="text" name="username" placeholder="请输入地区"
-							autocomplete="off" class="layui-input">
+						<input type="text" name="area" placeholder="请输入地区"
+							autocomplete="off" class="layui-input" value="${sareas }">
 					</div>
 					<div class="layui-input-inline">
-						<input type="text" name="username" placeholder="请输入频率"
-							autocomplete="off" class="layui-input">
+						<input type="text" name="frequency" placeholder="请输入频率"
+							autocomplete="off" class="layui-input" value="${sfrequencys }">
 					</div>
 					<div class="layui-input-inline" style="width: 80px">
-						<button class="layui-btn" lay-submit="" lay-filter="sreach">
-							<i class="layui-icon">&#xe615;</i>
+						<button class="layui-btn layui-btn-normal" lay-filter="sreach">
+							<i class="layui-icon">&#xe615;</i>查询
 						</button>
 					</div>
 				</div>
@@ -49,7 +51,7 @@
 		<table class="layui-table">
 			<thead>
 				<tr>
-				 
+
 					<th>ID</th>
 					<th>时间</th>
 					<th>地区</th>
@@ -100,16 +102,7 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-			<tbody>
-				<tr>
-					<td><input type="checkbox" value="1" name=""></td>
 
-					<td class="td-manage"><a title="彻底删除" href="javascript:;"
-						onclick="member_unset(this,'1')" style="text-decoration: none">
-							<i class="layui-icon">&#xe640;</i>
-					</a></td>
-				</tr>
-			</tbody>
 		</table>
 		<c:choose>
 			<c:when test="${pageNum<8}">

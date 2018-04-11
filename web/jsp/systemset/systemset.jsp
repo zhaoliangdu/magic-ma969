@@ -90,21 +90,7 @@
 		</center>
 		<hr>
 		<div class="layui-form-item">
-			<!-- <div class="layui-inline">
-				<label class="layui-form-label">设置字体：</label>
-				<div class="layui-input-inline">
-					<select id="setfont" class="layui-input" name="">
-						<option value="微软雅黑">微软雅黑</option>
-						<option value="宋体">宋体</option>
-						<option value="新宋体">新宋体</option>
-						<option value="楷体">楷体</option>
-						<option value="仿宋">仿宋</option>
-						<option value="黑体">黑体</option>
-						<option value="Consolas">Consolas</option>
-					</select>
-				</div>
-			</div>
-			 -->
+
 			<div class="layui-inline">
 				<label class="layui-form-label">设置字号：</label>
 				<div class="layui-input-inline">
@@ -117,8 +103,7 @@
 					<input type="button" value="设置" class="layui-btn"
 						onclick="changebg()" />
 				</div>
-			</div>
-
+			</div> 
 			<label class="layui-form-label">缓存大小：</label>
 			<div class="layui-input-inline">
 				<span id="tempsize"></span>&nbsp;&nbsp;<a
@@ -137,23 +122,23 @@
 <jsp:include page="../bottom.jsp"></jsp:include>
 <script src="resource/js/jscolor.js"></script>
 <script>
-var type = $("#chosev option:selected").text();
-var typeval = $("#chosev option:selected").val();
-$(document).ready(function() {
-	var tid = $("#tid").val();
-	if (tid != "") {
-		$("#chosev").val(tid);
-	}
-});
-
-$("#showtype").text(type);
-$("#typeval").text(typeval);
-function changeset() {
 	var type = $("#chosev option:selected").text();
-	var typeId = $("#chosev option:selected").val();
+	var typeval = $("#chosev option:selected").val();
+	$(document).ready(function() {
+		var tid = $("#tid").val();
+		if (tid != "") {
+			$("#chosev").val(tid);
+		}
+	});
+
 	$("#showtype").text(type);
-	window.location.href = $("#locationset").val() + typeId;
-}
+	$("#typeval").text(typeval);
+	function changeset() {
+		var type = $("#chosev option:selected").text();
+		var typeId = $("#chosev option:selected").val();
+		$("#showtype").text(type);
+		window.location.href = $("#locationset").val() + typeId;
+	}
 </script>
 
 <script>

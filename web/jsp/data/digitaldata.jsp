@@ -32,7 +32,7 @@
 							placeholder="请输入地区" autocomplete="off" class="layui-input">
 					</div>
 					<div class="layui-input-inline">
-						<input type="text" name="username" placeholder="请输入频率"
+						<input type="text" name="frequency" placeholder="请输入频率"
 							autocomplete="off" class="layui-input" name="frequency"
 							id="frequencys" value="${sfrequencys }">
 					</div>

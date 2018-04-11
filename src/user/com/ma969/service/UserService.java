@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.ma969.beans.User;
 import com.ma969.dao.SystemSetMapper;
 import com.ma969.dao.UserMapper;
 import com.ma969.utils.Sha;
-import me.jor.util.Help;
 
 /**
  * 
@@ -25,19 +25,18 @@ public class UserService {
 	@Autowired
 	SystemSetMapper systemMapper;
 
-	/**
-	 * login
-	 * 
-	 * @param username
-	 * @return true
-	 */
-
-	public boolean userLogin(String username, String password) {
-		User user = userMapper.findByName(username);
-		boolean flag = !Help.isEmpty(user)
-				? user.getUserName().equals(username) && Sha.getResult(username + password).equals(user.getPassword())
-				: false;
-		return flag;
+	public String getIpAddr(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
 	}
 
 	/**

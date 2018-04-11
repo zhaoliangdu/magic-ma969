@@ -30,7 +30,7 @@
 						class="layui-input" required="required" id="batchFile" />
 				</div>
 				<div class="layui-input-inline">
-					<input type="submiit" class="layui-btn layui-btn-normal" value="上传"
+					<input type="submit" class="layui-btn layui-btn-normal" value="上传"
 						id="audioUploadBtn" />
 				</div>
 			</form>

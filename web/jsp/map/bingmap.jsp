@@ -5,45 +5,53 @@
 <script type='text/javascript'
 	src='https://www.bing.com/api/maps/mapcontrol?branch=experimental&callback=loadMapScenario'
 	async defer></script>
-<div id="page-wrapper" style="min-width: 600px;">
-	<div class="row">
-		<div class="col-lg-12">
-			<!-- /.panel -->
-			<div class="panel panel-default">
-				<div class="panel-heading">必应地图</div>
-				<!-- /.panel-heading -->
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-								<div class="panel-body">
-									<strong>数据类型选择：</strong><select style="width: 100px; height: 33px;"
-										id="testmodeId" class="inptcs" onchange="getTestMode(this)">
-										<option value="1">数字电视</option>
-										<option value="2">调频/调幅</option>
-										<option value="3">CDR</option>
-										<option value="4">模拟电视</option>
-									</select>&nbsp;&nbsp;<strong>模式选择：</strong><select id="typeid" style="width: 100px; height: 33px;"
-										class="inptcs">
-										<option value="0">场强</option>
-										<option value="1">信噪比</option>
-										<option value="2">误包率</option>
-									</select> <input type="button" class="btn btn-info" value="加载采样点"
-										onclick="addbpoints()" /> &nbsp;&nbsp;<input type="checkbox"
-										onclick="showtran()" id="isck" /> <strong>显示发射塔</strong>
-								</div>
-							</div>
-							<div id="bingMap" style="width: 100%; height: 700px;"></div>
-						</div>
-					</div>
-					<!-- /.row -->
+<!-- 右侧主体开始 -->
+<div class="page-content">
+	<div class="content">
+		<!-- 右侧内容框架，更改从这里开始 -->
+		<fieldset class="layui-elem-field layui-field-title site-title">
+			<legend>
+				<a name="default">必应地图</a>
+			</legend>
+		</fieldset>
+		<xblock>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">数据类型：</label>
+				<div class="layui-input-inline">
+					<select id="testmodeId" class="layui-input " id="testmodeId"
+						onchange="getTestMode(this)">
+						<option value="1">数字电视</option>
+						<option value="2">调频/调幅</option>
+						<option value="3">CDR</option>
+						<option value="4">模拟电视</option>
+					</select>
 				</div>
-				<!-- /.panel-body -->
 			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">模式选择：</label>
+				<div class="layui-input-inline">
+					<select id="typeid" class="layui-input">
+						<option value="0">场强</option>
+						<option value="1">信噪比</option>
+						<option value="2">误包率</option>
+					</select>
+				</div>
+			</div>
+			<input type="button" class="layui-btn layui-btn-normal" value="加载采样点"
+				onclick="addbpoints()" /> <input type="checkbox"
+				onclick="showtran()" id="isck" />&nbsp;&nbsp;&nbsp;&nbsp;显示台站
+
 		</div>
+		</xblock>
+		<div id="bingMap"
+			style="width: 100%; min-height: 800px; min-width: 900px; height: 100%;"></div>
+		<!-- 右侧内容框架，更改从这里结束 -->
 	</div>
-	<!-- /.row -->
 </div>
+<!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
 <jsp:include page="../bottom.jsp"></jsp:include>
 <script>
 	function getTestMode(val) {
@@ -139,7 +147,7 @@
 							$(
 									'<div id="loadingTip" style="background-color:#6699ff">加载完成！</div>')
 									.appendTo($("#bingMap"));
-							setTimeout("$('#loading').remove()", 3000);
+
 							var pushpins = new Array(val[1].length);
 							for (var i = 0; i < val[1].length; i++) {
 								for (var j = 0; j < val[0].length; j++) {

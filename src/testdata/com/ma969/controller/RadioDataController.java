@@ -48,7 +48,8 @@ public class RadioDataController {
 	 * @throws Exception
 	 */
 	@RequestMapping("radiodata")
-	public ModelAndView radioData(@RequestParam Map<String, Object> smap) throws Exception {
+	public ModelAndView radioData(@RequestParam Map<String, Object> smap) throws Exception { 
+		
 		String parStartTime = (String) smap.get("startTime");
 		String parEndTime = (String) smap.get("endTime");
 		String area = (String) smap.get("area");
@@ -56,6 +57,7 @@ public class RadioDataController {
 		String pageNoStr = (String) smap.get("pageNo");
 		String testModeIdStr = (String) smap.get("testModeId");
 		String pageNumrStr = (String) smap.get("pageNumr");
+		
 		Map<String, Object> paramMap = new HashMap<>(16);
 		paramMap.put("startTime", parStartTime);
 		paramMap.put("endTime", parEndTime);
@@ -71,8 +73,10 @@ public class RadioDataController {
 		pageNum += count % pageNumr > 0 ? 1 : 0;
 		paramMap.put("pageNo", (pageNo - 1) * pageNumr);
 		paramMap.put("pageNumr", pageNumr);
+		
 		List<RadioData> radioDatas = radioDataService.listRadioDataByParam(paramMap);
 		List<DataMode> testModes = radioDataService.listDataModes();
+		
 		return new ModelAndView("jsp/data/radiodata").addObject("radiodatas", radioDatas).addObject("pageNo", pageNo)
 				.addObject("pageNum", pageNum).addObject("count", count).addObject("stTime", smap.get("startTime"))
 				.addObject("enTime", smap.get("endTime")).addObject("sareas", smap.get("area"))

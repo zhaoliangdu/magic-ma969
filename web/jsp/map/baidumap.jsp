@@ -40,7 +40,7 @@
 				class="layui-btn layui-btn-normal" value="生成场强图"
 				onclick="fieldOverlay()" /> <input type="button" value="计算距离"
 				class="layui-btn layui-btn-normal" onclick="openDis()"> <input
-				type="checkbox" onclick="showtransmit()" id="ischeck" title=""/>&nbsp;显示台站
+				type="checkbox" onclick="showtransmit()" id="ischeck" title="" />&nbsp;显示台站
 			<div class="layui-inline">
 				<label class="layui-form-label">选择主题：</label>
 				<div class="layui-input-inline">
@@ -50,9 +50,9 @@
 			</div>
 		</div>
 		</xblock>
-		<div id="bdmap"
+		<div id="baidumap"
 			style="width: 100%; min-height: 800px; min-width: 900px; height: 100%;">
-		</div> 
+		</div>
 		<!-- 右侧内容框架，更改从这里结束 -->
 	</div>
 </div>
@@ -82,7 +82,7 @@
 		sel.options.add(item);
 	}
 	// 初始化百度地图
-	var bdmap = new BMap.Map("bdmap", {
+	var bdmap = new BMap.Map("baidumap", {
 		mapType : BMAP_HYBRID_MAP
 	});
 	bdmap.centerAndZoom(new BMap.Point(110.200, 37.500), 5);
@@ -105,10 +105,11 @@
 	}));
 	//鼠标移动显示经纬度
 	bdmap.addEventListener("mousemove", function(e) {
-		$("#lnglat").val(
+		$("#lnglat").text(
 				"经度：" + e.point.lng.toFixed(4) + ",纬度："
 						+ e.point.lat.toFixed(4));
 	});
+	$("<span id='lnglat'></span>").appendTo("#baidumap");
 	var bottom_left_control = new BMap.ScaleControl({
 		anchor : BMAP_ANCHOR_BOTTOM_LEFT
 	});// 右下角，添加比例尺
@@ -194,7 +195,7 @@
 
 	function addpotions() {
 		$("#loadingTip").remove();
-		$("<div id='loadingTip' >加载数据，请稍候...</div>").appendTo($("#bdmap"));
+		$("<div id='loadingTip' >加载数据，请稍候...</div>").appendTo($("#baidumap"));
 		var allOverlay = bdmap.getOverlays();
 		for (var i = 0; i < allOverlay.length; i++) {
 			bdmap.removeOverlay(allOverlay[i]);
@@ -223,7 +224,7 @@
 						$("#loadingTip").remove();
 						$(
 								"<div id='loadingTip'  style='background-color:#6699ff'>加载完成！</div>")
-								.appendTo($("#bdmap"));
+								.appendTo($("#baidumap"));
 						if (document.createElement('canvas').getContext) {
 							var pointss = new Array(val[0].length);
 							for (var i = 0; i < pointss.length; i++) {

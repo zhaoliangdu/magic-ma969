@@ -46,8 +46,7 @@
 	<update id="updateBgColorFont"
 		parameterType="com.ma969.beans.SystemSet">
 		update system_set
-		set font_style =
-		#{fontStyle},font_size=#{fontSize}
+		set font_size=#{fontSize}
 		where uid=#{uid}
 	</update>
 	<update id="updateFieldSet"

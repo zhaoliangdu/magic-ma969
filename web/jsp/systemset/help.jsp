@@ -13,7 +13,7 @@
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<center>
 			<span style="font-size: 2em;">宝盈科技车载移动数据云端在线管理系统和数据分析管理软件【MA969YDYZM-S】V1.0</span>
-			<table>
+			<table style="font-size:1.5em;">
 				<thead>
 					<tr>
 						<th colspan="2"></th>

@@ -24,7 +24,9 @@
 </head>
 <body>
 	<div class="login-logo">
-		<h1>宝盈科技车载移动数据云端在线管理系统<br>和数据分析管理软件【MA969YDYZM-S】V1.0</h1>
+		<h1>
+			宝盈科技车载移动数据云端在线管理系统<br>和数据分析管理软件【MA969YDYZM-S】V1.0
+		</h1>
 	</div>
 	<br>
 	<div class="login-box">
@@ -32,6 +34,7 @@
 			action='${pageContext.servletContext.contextPath}/userlogin'
 			method="post">
 			<h3>登录你的帐号</h3>
+			<span style="color:red;">${ loginmsg}</span>
 			<label class="login-title" for="username">帐号</label>
 			<div class="layui-form-item">
 				<label class="layui-form-label login-form"><i

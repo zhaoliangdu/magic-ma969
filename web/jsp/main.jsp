@@ -52,7 +52,13 @@
 						<li><a href="baidumap"> <i class="iconfont">&#xe6a7;</i>
 								百度地图
 						</a></li>
-					</ul></li>
+					</ul>
+					<ul class="sub-menu" style="display: none">
+						<li><a href="bingmap"> <i class="iconfont">&#xe6a7;</i>
+								必应地图
+						</a></li>
+					</ul>
+				</li>
 				<li class="list"><a href="javascript:;"> <i
 						class="iconfont">&#xe6a3;</i> 用户管理 <i class="iconfont nav_right">&#xe697;</i>
 				</a>

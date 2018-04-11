@@ -12,19 +12,14 @@
 			</legend>
 		</fieldset>
 		<!-- 右侧内容框架，更改从这里开始 -->
-		<xblock>
-		<button class="layui-btn layui-btn-danger">
-			<i class="layui-icon">&#xe640;</i>批量删除
-		</button>
-		<a class="layui-btn layui-btn-normal"
+		<xblock> <a class="layui-btn layui-btn-normal"
 			onclick="addUser('添加用户','adduserview','500','720')">添加用户</a> <c:if
 			test="${loginuser.auth==2}">
-			<button class="layui-btn layui-btn-normal" onclick="userRecovery()">黑名单</button>
+			<button class="layui-btn layui-btn-warm" onclick="userRecovery()">黑名单</button>
 		</c:if> </xblock>
 		<table class="layui-table">
 			<thead>
-				<tr>
-				 
+				<tr> 
 					<th>用户ID</th>
 					<th>权限名称</th>
 					<th>用户账号</th>
@@ -39,7 +34,7 @@
 			<tbody>
 				<c:forEach var="user" items="${userlist}">
 					<tr>
-						 
+
 						<td>${user.userId }</td>
 						<c:choose>
 							<c:when test="${user.auth==0}">

@@ -46,6 +46,7 @@ public class CDRDataController {
 		String area = (String) smap.get("area");
 		String pageNumrStr = (String) smap.get("pageNumr");
 		String frequency = (String) smap.get("frequency");
+		
 		Map<String, Object> paramMap = new HashMap<>(16);
 		paramMap.put("startTime", parStartTime);
 		paramMap.put("endTime", parEndTime);
@@ -62,6 +63,7 @@ public class CDRDataController {
 		pageNum += count % pageNumr > 0 ? 1 : 0;
 		paramMap.put("pageNo", (pageNo - 1) * pageNumr);
 		paramMap.put("pageNumr", pageNumr);
+		
 		List<CDRData> cdrdatas = cdrDataService.listCDRDataByParam(paramMap);
 		return new ModelAndView("jsp/data/cdrdata").addObject("cdrdatas", cdrdatas)
 				.addObject("pageNo", pageNo).addObject("pageNum", pageNum).addObject("count", count)
@@ -71,7 +73,7 @@ public class CDRDataController {
 	}
 
 	/**
-	 * 删除数字电视数据
+	 * 删除CDR数据
 	 * 
 	 * @param id
 	 * @param response
@@ -88,7 +90,7 @@ public class CDRDataController {
 	}
 
 	/**
-	 * 导出数字电视数据
+	 * 导出CDR电视数据
 	 * 
 	 * @param type
 	 * @param response

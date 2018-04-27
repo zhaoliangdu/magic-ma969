@@ -5,7 +5,7 @@
 <center> 
 	<span style="color: red; font-size: 1.5em;">${updumessage }</span>
 	<form class="layui-form" method="post" id="registform"
-		action="${pageContext.servletContext.contextPath }/updateUser">
+		action="${pageContext.servletContext.contextPath }/user/updateUser">
 		<input type="hidden" name="userauth" value="${user.auth }" />
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户编号：</label>

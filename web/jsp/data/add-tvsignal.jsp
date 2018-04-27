@@ -9,9 +9,9 @@
 <body>
 	<span id="dmsg" style="color: red;"><h2>${dmsg }</h2></span>
 	<form class="layui-form"
-		action="${pageContext.servletContext.contextPath }/addtvsignal">
+		action="${pageContext.servletContext.contextPath }/datapoint/addtvsignal">
 		<div class="layui-form-item">
-			<label for="L_email" class="layui-form-label"> 地区： </label>
+			<label class="layui-form-label"> 地区： </label>
 			<div class="layui-input-inline">
 				<input type="text" iplaceholder="地区" name="area" required="required"
 					required="required" placeholder="地区" autocomplete="off"

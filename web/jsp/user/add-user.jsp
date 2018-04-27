@@ -9,7 +9,7 @@
 <center>
 	<span style="font-size: 1.5em; color: red;">${addumsg }</span>
 	<form class="layui-form" method="post" id="registform"
-		action="${pageContext.servletContext.contextPath }/adduser">
+		action="${pageContext.servletContext.contextPath }/user/adduser">
 		<input type="hidden" name="userauth" value="${user.auth }" />
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户权限： </label>

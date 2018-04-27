@@ -9,7 +9,6 @@
                                           onclick="startscreen()" class="layui-btn" value="动态显示"
                                           id="srun"/>
     <hr>
-
     <div id="transmitInfodiv"
          style=" line-height: 1.5em;">
         <input type="text" hidden="hidden" id="antennaId">

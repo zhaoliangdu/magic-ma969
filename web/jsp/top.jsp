@@ -20,6 +20,34 @@
 	setInterval("startTime()", 500);
 </script>
 <style>
+
+progress {
+	display: inline-block;
+	width: 160px;
+	height: 20px;
+	border: 1px solid #0064B4;
+	background-color: #6699ff;
+	color: #0064B4; /*IE10*/
+}
+/*ie6-ie9*/
+progress ie {
+	display: block;
+	height: 100%;
+	background: #0064B4;
+}
+
+progress::-moz-progress-bar {
+	background: #0064B4;
+}
+
+progress::-webkit-progress-bar {
+	background: #e6e6e6;
+}
+
+progress::-webkit-progress-value {
+	background: #0064B4;
+}
+
 .testmode {
 	width: 90%;
 	margin-left: 13%;
@@ -59,16 +87,15 @@
 	color: #fff;
 	font-size: 14px;
 }
-</style>
-<!-- bgcolor="#004080" -->
+</style> 
 </head>
 <body ondragstart="window.event.returnValue=false"
 	oncontextmenu="window.event.returnValue=false">
 	<!-- 顶部开始 -->
 	<div class="container">
 		<div class="logo">
-			<a href="index">宝盈科技车载移动数据云端在线管理系统和数据分析管理软件【MA969YDYZM-S】V1.0</a><img
-				src="resource/images/logo.gif" title="北京宝盈科技" width="120" />
+			<a href="${pageContext.servletContext.contextPath }/index">宝盈科技车载移动数据云端在线管理系统和数据分析管理软件【MA969YDYZM-S】V1.0</a><img
+				src="${pageContext.servletContext.contextPath }/resource/images/logo.gif" title="北京宝盈科技" />
 		</div>
 		<div class="open-nav">
 			<i class="iconfont">&#xe699;</i>
@@ -79,13 +106,13 @@
 					<!-- 二级菜单 -->
 					<dd>
 						<a href="#"
-							onclick="updateUser('修改用户信息','findUserById?uid=${uid }','500','700')">个人信息</a>
+							onclick="updateUser('修改用户信息','${pageContext.servletContext.contextPath }/user/findUserById?uid=${uid }','500','700')">个人信息</a>
 					</dd>
 					<dd>
-						<a href="getsystemset?typeId=0">设置</a>
+						<a href="${pageContext.servletContext.contextPath }/systemset/getsystemset?typeId=0">设置</a>
 					</dd>
 					<dd>
-						<a href="userlogout">退出</a>
+						<a href="${pageContext.servletContext.contextPath }/user/userlogout">退出</a>
 					</dd>
 				</dl></li>
 		</ul>

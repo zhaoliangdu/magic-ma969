@@ -144,7 +144,7 @@
 		var transmitck = document.getElementById("ischeck").checked;
 		if (transmitck) {
 			$.ajax({
-				url : "gettranlocation",
+				url : "${pageContext.servletContext.contextPath }/emitter/gettranlocation",
 				type : "post",
 				success : function(tran) {
 
@@ -213,7 +213,7 @@
 
 		$
 				.ajax({
-					url : "getpoints",
+					url : "${pageContext.servletContext.contextPath }/datapoint/getpoints",
 					type : "post",
 					data : {
 						"uid" : $("#uid").val(),
@@ -396,7 +396,7 @@
 		});
 		$
 				.ajax({
-					url : "fieldOverlay",
+					url : "${pageContext.servletContext.contextPath }/datapoint/fieldOverlay",
 					type : "post",
 					data : {
 						"uid" : $("#uid").val(),

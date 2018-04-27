@@ -148,7 +148,7 @@ public class AudioVideoController {
 			if (processVal.equals(result) && checkFileAndData) {
 				writer.println(1);
 			} else {
-				writer.println(result + "%");
+				writer.println(result);
 			}
 		} else {
 			writer.println(0);

@@ -15,7 +15,7 @@
 				<a name="default">数据上传</a>
 			</legend>
 		</fieldset>
-		<form class="layui-form" action="readfile" method="post">
+		<form class="layui-form" action="${pageContext.servletContext.contextPath }/datapoint/readfile" method="post">
 			<div class="layui-form-item">
 				<label class="layui-form-label">文件选择：</label>
 				<div class="layui-input-inline">
@@ -53,7 +53,7 @@
 		</fieldset>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<a href='${pageContext.servletContext.contextPath }/backupdatabase'
+				<a href='${pageContext.servletContext.contextPath }/datapoint/backupdatabase'
 					class="layui-btn" lay-filter="demo1">数据备份</a>
 			</div>
 		</div>
@@ -84,7 +84,7 @@
 			formData.append("eid", eid);
 			formData.append("auth", auth);
 			$.ajax({
-				url : "readfile",
+				url : "${pageContext.servletContext.contextPath }/datapoint/readfile",
 				type : "post",
 				data : formData,
 				processData : false,

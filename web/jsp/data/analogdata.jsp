@@ -14,7 +14,7 @@
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<xblock>
 		<form class="layui-form xbs" method="get" id="datasearch"
-			action="${pageContext.servletContext.contextPath }/analogdata">
+			action="${pageContext.servletContext.contextPath }/datapoint/analogdata">
 			<div class="layui-form-pane" style="text-align: center;">
 				<div class="layui-form-item" style="display: inline-block;">
 					<label class="layui-form-label xbs768">日期范围</label>
@@ -42,10 +42,7 @@
 					</div>
 				</div>
 			</div>
-		</form>
-		<button class="layui-btn layui-btn-danger" onclick="">
-			<i class="layui-icon">&#xe640;</i>批量删除
-		</button>
+		</form> 
 		<a class="layui-btn layui-btn-normal"
 			href="${pageContext.servletContext.contextPath }/exportanalogdata?type=txt">导出到txt</a>
 		<a class="layui-btn layui-btn-normal"
@@ -53,7 +50,7 @@
 		</xblock>
 		<table class="layui-table">
 			<thead>
-				<tr> 
+				<tr>
 					<th>ID</th>
 					<th>时间</th>
 					<th>地区</th>
@@ -123,53 +120,50 @@
 				</c:if>
 			</c:otherwise>
 		</c:choose>
-		<center>
-			<table style="width: 55%;">
-				<thead>
-					<tr>
-						<th>共${count}条/${pageNum }页</th>
-						<th><a class="layui-btn layui-btn-normal"
-							href="${pageContext.servletContext.contextPath }/analogdata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-							pageNo="0"> 首页 </a></th>
-						<c:if test="${pageNo-1 <=0}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/analogdata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}">
-									上一页 </a></th>
-						</c:if>
-						<c:if test="${pageNo-1>0}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${pageNo-1 }&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNo-1 }"> 上一页 </a></th>
-						</c:if>
-						<c:forEach begin="${sta }" end="${end }" var="er">
-							<c:if test="${pageNo==er }">
-								<th class="active"><a class="layui-btn layui-btn-normal"
-									href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-									pageNo="${er }"> ${er } </a></th>
-							</c:if>
-							<c:if test="${pageNo!=er }">
-								<th class=""><a class="layui-btn layui-btn-normal"
-									href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-									pageNo="${er }"> ${er } </a></th>
-							</c:if>
-						</c:forEach>
-						<c:if test="${pageNo+1 >pageNum}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNum }"> 下一页 </a></th>
-						</c:if>
-						<c:if test="${pageNo+1<=pageNum}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${pageNo+1}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNo+1 })"> 下一页 </a></th>
-						</c:if>
-						<th><a class="layui-btn layui-btn-normal"
-							href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-							pageNo="${pageNum})"> 尾页 </a></th>
-					</tr>
-				</thead>
-			</table>
-		</center>
+		<div style="text-align: center;">
+			<ul id="menu">
+				<li>当前第${pageNo }页&nbsp;共${count}条/${pageNum }页</li>
+				<li><a
+					href="${pageContext.servletContext.contextPath }/analogdata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+					pageNo="0"> 首页 </a></li>
+				<c:if test="${pageNo-1 <=0}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/analogdata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}">
+							上一页 </a></li>
+				</c:if>
+				<c:if test="${pageNo-1>0}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${pageNo-1 }&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNo-1 }"> 上一页 </a></li>
+				</c:if>
+				<c:forEach begin="${sta }" end="${end }" var="er">
+					<c:if test="${pageNo==er }">
+						<li class="active"><a
+							href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+							pageNo="${er }"> ${er } </a></li>
+					</c:if>
+					<c:if test="${pageNo!=er }">
+						<th class=""><a
+							href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+							pageNo="${er }"> ${er } </a>
+							</li>
+					</c:if>
+				</c:forEach>
+				<c:if test="${pageNo+1 >pageNum}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNum }"> 下一页 </a></li>
+				</c:if>
+				<c:if test="${pageNo+1<=pageNum}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${pageNo+1}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNo+1 })"> 下一页 </a></li>
+				</c:if>
+				<li><a
+					href="${pageContext.servletContext.contextPath }/analogdata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+					pageNo="${pageNum})"> 尾页 </a></li>
+			</ul>
+		</div>
 		<!-- 右侧内容框架，更改从这里结束 -->
 	</div>
 </div>

@@ -5,7 +5,7 @@
 <center>
 	<span style="color: red">${updateauthm }</span>
 </center>
-<form action="updateauth" method="post">
+<form action="${pageContext.servletContext.contextPath }/user/updateauth" method="post">
 	<div class="layui-form-item">
 		<label class="layui-form-label">用户编号：</label>
 		<div class="layui-input-inline">

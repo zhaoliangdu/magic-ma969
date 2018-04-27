@@ -9,7 +9,7 @@
 <body>
 	<span id="dmsg" style="color: red;"><h2>${dmsg }</h2></span>
 	<form class="layui-form"
-		action="${pageContext.servletContext.contextPath }/updatetvsignal"
+		action="${pageContext.servletContext.contextPath }/datapoint/updatetvsignal"
 		method="post">
 		<div class="layui-form-item">
 			<label for="L_email" class="layui-form-label"> 编号： </label>
@@ -74,7 +74,7 @@
 		</div>
 	</form>
 	<input hidden="hidden"
-		value="${pageContext.servletContext.contextPath }/tvsignalview"
+		value="${pageContext.servletContext.contextPath }/datapoint/tvsignalview"
 		id="disview" />
 </body>
 </html>

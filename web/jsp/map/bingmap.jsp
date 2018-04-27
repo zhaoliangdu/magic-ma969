@@ -71,7 +71,7 @@
 				document.getElementById('bingMap'),
 				{
 					credentials : 'AtrHYGI-KJZEpGZS7YyXlC0ABXqFMrBFRrgp_oRG3lJdHOc5Th-VO9F1nIBGkCJe',
-					center : new Microsoft.Maps.Location(37.200, 106.001),
+					center : new Microsoft.Maps.Location(32.200, 106.001),
 					zoom : 4
 				});
 	}
@@ -80,7 +80,7 @@
 		var transmitck = document.getElementById("isck").checked;
 		if (transmitck) {
 			$.ajax({
-				url : "gettranlocation",
+				url : "${pageContext.servletContext.contextPath }/emitter/gettranlocation",
 				type : "post",
 				success : function(tran) {
 					var pushpins = new Array(tran.length);
@@ -107,6 +107,9 @@
 	}
 	//加载采样点信息
 	function addbpoints() {
+		var uid = $("#uid").val();
+		var testModeId = $("#testmodeId").val();
+		var typeId = $("#typeid").val();
 		$("#loadingTip").remove();
 		$('<div id="loadingTip">加载数据，请稍候...</div>').appendTo($("#bingMap"));
 		for (var i = bingmap.entities.getLength() - 1; i >= 0; i--) {
@@ -115,43 +118,36 @@
 				bingmap.entities.removeAt(i);
 			}
 		}
-		var colorArray = new Array();
-
-		//场强范围对应颜色表
-		$.ajax({
-			url : "getsamplestyle",
-			type : "get",
-			data : {
-				"uid" : $("#uid").val(),
-				"typeId" : $("#typeid").val()
-			},
-			success : function(colors) {
-				for (var i = 0; i < colors.length; i++) {
-					colorArray[i] = colors[i];
-				}
-			}
-		});
 
 		$
 				.ajax({
-					url : "getpoints",
+					url : "${pageContext.servletContext.contextPath }/datapoint/getpoints",
 					type : "post",
 					data : {
-						"uid" : $("#uid").val(),
-						"testModeId" : $("#testmodeId").val(),
-						"typeId" : $("#typeid").val()
+						"uid" : uid,
+						"testModeId" : testModeId,
+						"typeId" : typeId
 					},
 					success : function(val) {
+						var colorArray = val[2];
 						if (document.createElement('canvas').getContext) {
 							$("#loadingTip").remove();
-							$(
-									'<div id="loadingTip" style="background-color:#6699ff">加载完成！</div>')
-									.appendTo($("#bingMap"));
+							if (val[1] == "") {
+								$(
+										'<div id="loadingTip" style="background-color:red">数据不存在！</div>')
+										.appendTo($("#bingMap"));
+
+							} else {
+								$(
+										'<div id="loadingTip" style="background-color:#6699ff">加载完成！</div>')
+										.appendTo($("#bingMap"));
+
+							}
 
 							var pushpins = new Array(val[1].length);
 							for (var i = 0; i < val[1].length; i++) {
 								for (var j = 0; j < val[0].length; j++) {
-									if ($("#typeid").val() == 0) {
+									if (typeId == 0) {
 										if (val[1][i].field >= parseInt(val[0][j]
 												.split("-")[0])
 												&& val[1][i].field < parseInt(val[0][j]
@@ -163,7 +159,7 @@
 														color : colorArray[j]
 													});
 										}
-									} else if ($("#typeid").val() == 1) {
+									} else if (typeId == 1) {
 										if (val[1][i].snr >= parseInt(val[0][j]
 												.split("-")[0])
 												&& val[1][i].snr < parseInt(val[0][j]
@@ -191,15 +187,15 @@
 
 								}
 							}
+						 
 							var infobox = new Microsoft.Maps.Infobox(
 									pushpins[0].getLocation(), {
 										visible : false
 									});
 							infobox.setMap(bingmap);
 							for (var a = 0; a < pushpins.length; a++) {
-								var pushpin = pushpins[a];
 
-								pushpin.metadata = {
+								pushpins[a].metadata = {
 									title : '采样点信息',
 									description : "<hr>时间："
 											+ val[1][a].time
@@ -218,7 +214,7 @@
 
 								Microsoft.Maps.Events
 										.addHandler(
-												pushpin,
+												 pushpins[a],
 												'click',
 												function(args) {
 													infobox
@@ -230,7 +226,7 @@
 																visible : true
 															});
 												});
-								bingmap.entities.push(pushpin);
+								bingmap.entities.push( pushpins[a]);
 							}
 
 						} else {

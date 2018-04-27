@@ -13,7 +13,7 @@
 		</fieldset>
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<div>
-			<form action="addtransmit" method="post"
+			<form action="${pageContext.servletContext.contextPath }/emitter/addtransmit" method="post"
 				onsubmit="return checkform()">
 				<div class="layui-form-item">
 					<div class="layui-inline">

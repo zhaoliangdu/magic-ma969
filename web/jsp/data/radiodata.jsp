@@ -14,15 +14,17 @@
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<xblock>
 		<form class="layui-form xbs"
-			action="${pageContext.servletContext.contextPath }/radiodata">
+			action="${pageContext.servletContext.contextPath }/datapoint/radiodata">
 			<div class="layui-form-pane" style="text-align: center;">
 				<div class="layui-form-item" style="display: inline-block;">
 					<label class="layui-form-label xbs768">日期范围</label>
 					<div class="layui-input-inline xbs768">
-						<input class="layui-input" placeholder="开始日" id="date_s" name="startTime" value="${stTime }"> 
+						<input class="layui-input" placeholder="开始日" id="date_s"
+							name="startTime" value="${stTime }">
 					</div>
 					<div class="layui-input-inline xbs768">
-						<input class="layui-input" placeholder="截止日" id="date_e" name="endTime" value="${enTime }">
+						<input class="layui-input" placeholder="截止日" id="date_e"
+							name="endTime" value="${enTime }">
 					</div>
 					<div class="layui-input-inline">
 						<input type="text" name="area" placeholder="请输入地区"
@@ -47,9 +49,9 @@
 		</form>
 
 		<a class="layui-btn layui-btn-normal"
-			href="${pageContext.servletContext.contextPath }/exportradiodata?type=txt">导出到txt</a>
+			href="${pageContext.servletContext.contextPath }/datapoint/exportradiodata?type=txt">导出到txt</a>
 		<a class="layui-btn layui-btn-normal"
-			href="${pageContext.servletContext.contextPath }/exportradiodata?type=excel">导出到excel</a>
+			href="${pageContext.servletContext.contextPath }/datapoint/exportradiodata?type=excel">导出到excel</a>
 		</xblock>
 
 		<table class="layui-table">
@@ -139,54 +141,49 @@
 				</c:if>
 			</c:otherwise>
 		</c:choose>
-		<center>
-			<table style="width: 50%;">
-				<thead>
-					<tr>
-						<th>共${count}条/${pageNum }页</th>
-						<th><a class="layui-btn layui-btn-normal"
-							href="${pageContext.servletContext.contextPath }/radiodata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-							pageNo="0"> 首页 </a></th>
-						<c:if test="${pageNo-1 <=0}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/radiodata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}">
-									上一页 </a></th>
-						</c:if>
-						<c:if test="${pageNo-1>0}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/radiodata?pageNo=${pageNo-1 }&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNo-1 }"> 上一页 </a></th>
-						</c:if>
-						<c:forEach begin="${sta }" end="${end }" var="er">
-							<c:if test="${pageNo==er }">
-								<th class="active"><a class="layui-btn layui-btn-normal"
-									href="${pageContext.servletContext.contextPath }/radiodata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-									pageNo="${er }"> ${er } </a></th>
-							</c:if>
-							<c:if test="${pageNo!=er }">
-								<th class=""><a class="layui-btn layui-btn-normal"
-									href="${pageContext.servletContext.contextPath }/radiodata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-									pageNo="${er }"> ${er } </a></th>
-							</c:if>
-						</c:forEach>
-						<c:if test="${pageNo+1 >pageNum}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/radiodata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNum }">下一页 </a></th>
-						</c:if>
-						<c:if test="${pageNo+1<=pageNum}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/radiodata?pageNo=${pageNo+1}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNo+1 })"> 下一页 </a></th>
-						</c:if>
-						<th><a class="layui-btn layui-btn-normal"
-							href="${pageContext.servletContext.contextPath }/radiodata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-							pageNo="${pageNum})"> 尾页 </a></th>
-					</tr>
-				</thead>
-			</table>
-		</center>
-		<div id="pageDemo"></div>
+		<div style="text-align: center;">
+			<ul id="menu">
+				<li>当前第${pageNo }页&nbsp;共${count}条/${pageNum }页</li>
+				<li><a
+					href="${pageContext.servletContext.contextPath }/datapoint/radiodata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+					pageNo="0"> 首页 </a></li>
+				<c:if test="${pageNo-1 <=0}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/datapoint/radiodata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}">
+							上一页 </a></li>
+				</c:if>
+				<c:if test="${pageNo-1>0}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/datapoint/radiodata?pageNo=${pageNo-1 }&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNo-1 }"> 上一页 </a></li>
+				</c:if>
+				<c:forEach begin="${sta }" end="${end }" var="er">
+					<c:if test="${pageNo==er }">
+						<li><a
+							href="${pageContext.servletContext.contextPath }/datapoint/radiodata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+							pageNo="${er }"> ${er } </a></li>
+					</c:if>
+					<c:if test="${pageNo!=er }">
+						<li><a
+							href="${pageContext.servletContext.contextPath }/radiodata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+							pageNo="${er }"> ${er } </a></li>
+					</c:if>
+				</c:forEach>
+				<c:if test="${pageNo+1 >pageNum}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/datapoint/radiodata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNum }">下一页 </a></li>
+				</c:if>
+				<c:if test="${pageNo+1<=pageNum}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/datapoint/radiodata?pageNo=${pageNo+1}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNo+1 })"> 下一页 </a></li>
+				</c:if>
+				<li><a
+					href="${pageContext.servletContext.contextPath }/datapoint/radiodata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+					pageNo="${pageNum})"> 尾页 </a></li>
+			</ul>
+		</div>
 		<!-- 右侧内容框架，更改从这里结束 -->
 	</div>
 </div>
@@ -198,7 +195,7 @@
 function delradiodata(id){
 	if(window.confirm("确定删除吗？")){
 		$.ajax({
-			url:"delradiodata",
+			url:"${pageContext.servletContext.contextPath }/datapoint/delradiodata",
 			type:"post",
 			data:{"id":id},
 			success:function(val){

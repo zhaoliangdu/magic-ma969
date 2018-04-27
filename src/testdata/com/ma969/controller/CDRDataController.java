@@ -26,6 +26,7 @@ import com.ma969.utils.ExportToTxt;
 import me.jor.util.Help;
 
 @Controller
+@RequestMapping("datapoint")
 public class CDRDataController {
 	@Autowired
 	CDRDataService cdrDataService;

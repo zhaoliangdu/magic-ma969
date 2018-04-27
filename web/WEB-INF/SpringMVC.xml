@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	<context:component-scan base-package="com.ma969" />
 	<mvc:annotation-driven></mvc:annotation-driven>
@@ -18,30 +25,58 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="user" value="${username}"></property>
 		<property name="password" value="${password}"></property>
 		<property name="jdbcUrl" value="${url}"></property>
 		<property name="driverClass" value="${driver}"></property>
 	</bean>
 	<!-- 配置跟Mybatis整合 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<!-- 配置扫描Mybatis的Mapper类和XML文件 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- 指定你的文件在哪里 -->
 		<property name="basePackage" value="com.ma969.dao" />
-	</bean> 
-	<!-- 默认访问跳转到登录页面(即定义无需Controller的url<->view直接映射) -->
-	<mvc:view-controller path="/" view-name="forward:/login.jsp" />
-
-	<bean id="multipartResolver" class="com.ma969.linstener.CustomMultipartResolver">
 	</bean>
+	<!-- 默认访问跳转到登录页面(即定义无需Controller的url<->view直接映射) -->
+	<mvc:view-controller path="/"
+		view-name="forward:/login.jsp" />
+	<!-- 多文件上传 -->
+	<bean id="multipartResolver"
+		class="com.ma969.linstener.CustomMultipartResolver">
+	</bean>
+
+	<!-- CRON表达式			 		含义 
+		"0 0 12 * * ?" 			每天中午十二点触发 
+		"0 15 10 ? * *" 		每天早上10：15触发 
+		"0 15 10 * * ?" 		每天早上10：15触发 
+		"0 15 10 * * ? *" 		每天早上10：15触发 
+		"0 15 10 * * ? 2005" 	2005年的每天早上10：15触发 
+		"0 * 14 * * ?" 			每天从下午2点开始到2点59分每分钟一次触发 
+		"0 0/5 14 * * ?"  		每天从下午2点开始到2：55分结束每5分钟一次触发 
+		"0 0/5 14,18 * * ?" 	每天的下午2点至2：55和6点至6点55分两个时间段内每5分钟一次触发 
+		"0 0-5 14 * * ?" 		每天14:00至14:05每分钟一次触发 
+		"0 10,44 14 ? 3 WED" 	三月的每周三的14：10和14：44触发 
+		"0 15 10 ? * MON-FRI" 	每个周一、周二、周三、周四、周五的10：15触发 -->
+
+	<!-- 定时器任务 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<context:annotation-config />
+	<!-- 在applicationContext.xml中进行配置，使用定时器 ref : pojo类的名称 method : 调用的方式名称 
+		cron : cronExpression表达式 cron="0/5 * * * * ?" //表示每天十点十分执行一次 -->
+	<task:scheduled-tasks>
+		<task:scheduled ref="taskJob" method="springTask"
+			cron="0 0 12 * * ?"  />
+	</task:scheduled-tasks>
 
 	<!-- 开启静态资源的支持 -->
 	<mvc:default-servlet-handler />
-	<mvc:resources mapping="/resource/**" location="/resource/" />
+	<mvc:resources mapping="/resource/**"
+		location="/resource/" />
 	<!-- mvc:mapping代表拦截路径 -->
 	<!-- mvc:exclude-mapping代表不拦截路径 -->
 	<mvc:interceptors>
@@ -51,7 +86,8 @@
 			<mvc:exclude-mapping path="/userlogin" />
 			<mvc:exclude-mapping path="/regist" />
 			<mvc:exclude-mapping path="/resource/**" />
-			<mvc:exclude-mapping path="/resource/fileupload/**" />
+			<mvc:exclude-mapping
+				path="/resource/fileupload/**" />
 			<bean class="com.ma969.interceptor.UserInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
@@ -60,7 +96,8 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<!-- 使用annotation注解方式配置事务 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
 	<!-- 视图解析器 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

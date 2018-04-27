@@ -13,7 +13,7 @@
 		</fieldset>
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<xblock> <a class="layui-btn layui-btn-normal"
-			onclick="addUser('添加用户','adduserview','500','720')">添加用户</a> <c:if
+			onclick="addUser('添加用户','${pageContext.servletContext.contextPath }/user/adduserview','500','720')">添加用户</a> <c:if
 			test="${loginuser.auth==2}">
 			<button class="layui-btn layui-btn-warm" onclick="userRecovery()">黑名单</button>
 		</c:if> </xblock>
@@ -56,18 +56,18 @@
 						<c:choose>
 							<c:when test="${username==user.userName}">
 								<td><a href="#" idu="upd" class="layui-btn layui-btn-xs"
-									onclick="updateUser('修改用户信息','findUserById?uid=${user.userId }','500','700')">修改</a>
+									onclick="updateUser('修改用户信息','${pageContext.servletContext.contextPath }/user/findUserById?uid=${user.userId }','500','700')">修改</a>
 									<a href="#" class="layui-btn layui-btn-xs"
-									onclick="updatePwd('修改用户密码','updpwd?uid=${user.userId }','500','350')">修改密码</a>
+									onclick="updatePwd('修改用户密码','${pageContext.servletContext.contextPath }/user/updpwd?uid=${user.userId }','500','350')">修改密码</a>
 								</td>
 							</c:when>
 							<c:when test="${auth==2}">
 								<td style="color: blue;"><a href="#" idu="upd"
 									class="layui-btn layui-btn-xs"
-									onclick="updateUser('修改用户信息','findUserById?uid=${user.userId }','500','700')">修改</a>&nbsp;<a
+									onclick="updateUser('修改用户信息','${pageContext.servletContext.contextPath }/user/findUserById?uid=${user.userId }','500','700')">修改</a>&nbsp;<a
 									href="#" class="layui-btn layui-btn-xs"
-									onclick="updatePwd('修改用户密码','updpwd?uid=${user.userId }','500','350')">修改密码</a>&nbsp;<a
-									href="${pageContext.servletContext.contextPath}/deleteUser?id=${user.userId}"
+									onclick="updatePwd('修改用户密码','${pageContext.servletContext.contextPath }/user/updpwd?uid=${user.userId }','500','350')">修改密码</a>&nbsp;<a
+									href="${pageContext.servletContext.contextPath}/user/deleteUser?id=${user.userId}"
 									onclick="confirmdel()" class="layui-btn layui-btn-danger">删除</a></td>
 							</c:when>
 							<c:otherwise>
@@ -95,7 +95,7 @@
 	//查找用户
 	function finduser(uid) {
 		$.ajax({
-			url : "findById",
+			url : "${pageContext.servletContext.contextPath }/user/findById",
 			type : "post",
 			data : {
 				"uid" : uid
@@ -150,7 +150,7 @@
 		$("#blacklist").empty();
 		$
 				.ajax({
-					url : "blacklist",
+					url : "${pageContext.servletContext.contextPath }/user/blacklist",
 					type : "get",
 					success : function(blist) {
 						for (var i = 0; i < blist.length; i++) {

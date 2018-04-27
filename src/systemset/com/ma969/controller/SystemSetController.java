@@ -29,6 +29,7 @@ import com.ma969.utils.RandomColor;
  */
 
 @Controller
+@RequestMapping("systemset")
 public class SystemSetController {
 	@Autowired
 	SystemSetService service;
@@ -83,12 +84,15 @@ public class SystemSetController {
 				min = systemSet.getMinField();
 				max = systemSet.getMaxField();
 			}
+			
 			for (String color : colorarr) {
 				colorlist.add(color);
 			}
+			
 			for (String range : rangearr) {
 				rangelist.add(range.trim());
 			}
+			
 			int clist = colorlist.size();
 			LOG.info("colorlist:" + colorlist.size() + "-score:" + score);
 			if (clist < score) {

@@ -4,7 +4,7 @@
 <jsp:include page="../../resource/resource.jsp"></jsp:include>
 
 <center>
-	<form action="updatepwd" method="post" id="upwdfrom" class="layui-form">
+	<form action="${pageContext.servletContext.contextPath }/user/updatepwd" method="post" id="upwdfrom" class="layui-form">
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户编号：</label>
 			<div class="layui-input-inline">

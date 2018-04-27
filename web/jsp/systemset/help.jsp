@@ -51,7 +51,7 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td><img alt="宝盈科技" src="resource/images/wx.jpg" title="宝盈科技"
+						<td><img alt="宝盈科技" src="${pageContext.servletContext.contextPath }/resource/images/wx.jpg" title="宝盈科技"
 							width="150px" height="150px"></td>
 					</tr>
 				</tbody>

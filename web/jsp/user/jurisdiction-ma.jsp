@@ -58,7 +58,7 @@
 								</c:if>
 								<c:if test="${user.auth<2 }">
 									<td><a href="#" idu="upd"
-										onclick="updataAuth('修改权限','updjru?uid=${user.userId }&username=${user.userName }','500','300')"
+										onclick="updataAuth('修改权限','${pageContext.servletContext.contextPath }/user/updjru?uid=${user.userId }&username=${user.userName }','500','300')"
 										class="layui-btn layui-btn-xs">修改</a></td>
 								</c:if>
 							</c:when>

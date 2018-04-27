@@ -14,12 +14,8 @@
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<xblock>
 		<div class="layui-form-item layui-form">
-			<div class="layui-input-inline">
-				<button class="layui-btn layui-btn-danger">
-					<i class="layui-icon">&#xe640;</i>批量删除
-				</button>
-			</div>
-			<form action="addaudio" enctype="multipart/form-data" method="post"
+
+			<form action="${pageContext.servletContext.contextPath }/media/addaudio" enctype="multipart/form-data" method="post"
 				id="audiofrom" onsubmit="return checkform()" target="hidden_frame">
 				<label class="layui-form-label">台站名称：</label>
 				<div class="layui-input-inline">
@@ -36,6 +32,7 @@
 			</form>
 		</div>
 		</xblock>
+		<progress max="100" style="width: 100%;" id="vprogressBar"></progress>
 		<table class="layui-table">
 			<thead>
 				<tr>
@@ -70,21 +67,12 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<center>
-			<div id="progressdiv">
-				<div class="layui-progress layui-progress-big"
-					lay-showPercent="true">
-					<div class="layui-progress-bar layui-bg-blue" id="aprogressBar">
-						<span id="progressnum"></span>
-					</div>
-				</div>
-			</div>
-		</center>
+
 		<!-- 右侧内容框架，更改从这里结束 -->
 	</div>
 </div>
 <input hidden="hidden" id="audioview"
-	value="${pageContext.servletContext.contextPath }/audioma" />
+	value="${pageContext.servletContext.contextPath }/meida/audioma" />
 <!-- 右侧主体结束 -->
 </div>
 <!-- 中部结束 -->
@@ -103,7 +91,7 @@ function checkform(){
 	function delaudio(id){
 		if(window.confirm("确定删除吗？")){
 			$.ajax({
-				url:"delaudiodata",
+				url:"${pageContext.servletContext.contextPath }/media/delaudiodata",
 				type:"post",
 				data:{"id":id},
 				success:function(val){
@@ -121,30 +109,27 @@ function checkform(){
 	}
 	
 	 $(document).ready(function() {   
-	        var init;
-	        $("#progressdiv").hide(); 
+	        var init; 
 	            $('#audioUploadBtn').bind('click', function() { 
-	            	$("#progressdiv").show();
+	             
 	                $('#audiofrom').submit();  
 	                var eventFun = function() {  
 	                	$.ajax({
-	            			url : "getprogress",
+	            			url : "${pageContext.servletContext.contextPath }/media/getprogress",
 	            			type : "post",
 	            			success : function(progressdata) {  
 	            				if(progressdata == 0){
 	            					 clearInterval(init);
 	            	            	 alert("上传失败，文件不能为空"); 
 	            	            	 window.location.reload();
-	            					 $("#progressdiv").hide();   
+	            					 
 	            					 window.location.reload();
 	            	            }else if ((progressdata == "100%")||(progressdata ==1)) { 
-	            					 clearInterval(init);
-	            					 $("#progressdiv").hide();   
+	            					 clearInterval(init); 
 	            					 alert("上传成功");
 	            					 window.location.reload();
 	            	            } else{
-	            	            	$("#progressnum").text(progressdata);
-	            	            	 $("#aprogressBar").attr("lay-percent", progressdata);   
+	            	            	$("#vprogressBar").val(progressdata);  
 	            	            }
 	            			}
 	            		});

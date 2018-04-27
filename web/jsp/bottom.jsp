@@ -15,37 +15,37 @@
 	<div class="swiper-container changer-list">
 		<div class="swiper-wrapper">
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/a.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/a.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/b.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/b.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/c.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/c.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/d.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/d.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/e.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/e.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/f.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/f.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/g.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/g.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/h.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/h.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/i.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/i.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/j.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/j.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
-				<img class="item" src="resource/images/k.jpg" alt="">
+				<img class="item" src="${pageContext.servletContext.contextPath }/resource/images/k.jpg" alt="">
 			</div>
 			<div class="swiper-slide">
 				<span class="reset">初始化</span>
@@ -76,7 +76,7 @@
 			function() {
 				 
 				$.ajax({
-					url : "loadTransmit",
+					url : "${pageContext.servletContext.contextPath}/emitter/loadTransmit",
 					type : "get",
 					success : function(transmit) {
 						for (var i = 0; i < transmit.length; i++) {

@@ -35,6 +35,7 @@ import me.jor.util.Help;
  * @time 创建时间：2017年11月9日上午9:49:40
  */
 @Controller
+ 
 public class UserController {
 	@Autowired
 	UserService service;
@@ -42,6 +43,7 @@ public class UserController {
 	SystemSetService systemService;
 	@Autowired
 	TestDataService testDataService;
+	
 	private static final Log LOG = LogFactory.getLog(UserController.class);
 
 	/**
@@ -57,7 +59,7 @@ public class UserController {
 		LOG.info("login-name:" + uname + "，time:" + LocalDateTime.now().toLocalTime().toString());
 		HttpSession session = request.getSession();
 		User user = service.findUserByName(uname);
-		if (!Help.isEmpty(user)) {
+		if (!Help.isEmpty(user)) { 
 			if (uname.equals(user.getUserName()) && Sha.getResult(uname + upwd).equals(user.getPassword())) {
 				String ipAddr = service.getIpAddr(request);
 				session.setAttribute("ipAddr", ipAddr);
@@ -141,7 +143,7 @@ public class UserController {
 		return new ModelAndView("login");
 	}
 
-	@RequestMapping("adduserview")
+	@RequestMapping("user/adduserview")
 	public ModelAndView addUserView() {
 		return new ModelAndView("jsp/user/add-user");
 	}
@@ -153,7 +155,7 @@ public class UserController {
 	 * @return
 	 * @throws ParseException
 	 */
-	@RequestMapping(value = "/adduser", method = RequestMethod.POST)
+	@RequestMapping(value = "user/adduser", method = RequestMethod.POST)
 	public ModelAndView addUser(@RequestParam("username") String userName, @RequestParam("auth") Integer auth,
 			@RequestParam("password") String password, @RequestParam("name") String name,
 			@RequestParam("userBirthday") String userBirthday, @RequestParam("userAddress") String userAddress,
@@ -192,7 +194,7 @@ public class UserController {
 	 * @return
 	 * @throws ParseException
 	 */
-	@RequestMapping("usermanage")
+	@RequestMapping("user/usermanage")
 	@ResponseBody
 	public ModelAndView getUsers(HttpServletResponse response, HttpServletRequest request) throws ParseException {
 		return new ModelAndView("jsp/user/user-ma").addObject("userlist", service.getUsers());
@@ -204,7 +206,7 @@ public class UserController {
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping("blacklist")
+	@RequestMapping("user/blacklist")
 	@ResponseBody
 	public void getBlackList(HttpServletResponse response) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
@@ -223,7 +225,7 @@ public class UserController {
 	 * @param request
 	 * @return ModelAndView
 	 */
-	@RequestMapping("userrecovery")
+	@RequestMapping("user/userrecovery")
 	public ModelAndView userRecovery(@RequestParam("id") int id, HttpServletRequest request) {
 		LOG.info("userrecovery-time:" + LocalDateTime.now());
 		HttpSession session = request.getSession();
@@ -267,7 +269,7 @@ public class UserController {
 	/***
 	 * 添加用户页面
 	 */
-	@RequestMapping("adduserView")
+	@RequestMapping("user/adduserView")
 	public ModelAndView addUserView(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String auth = "auth";
@@ -288,7 +290,7 @@ public class UserController {
 	 * @return
 	 * @throws ParseException
 	 */
-	@RequestMapping("updateUser")
+	@RequestMapping("user/updateUser")
 	public ModelAndView updateUser(@RequestParam Map<String, String> use, HttpServletRequest request,
 			HttpServletResponse response) throws ParseException {
 		HttpSession session = request.getSession();
@@ -328,7 +330,7 @@ public class UserController {
 	 * @return
 	 * @throws ParseException
 	 */
-	@RequestMapping("findUserById")
+	@RequestMapping("user/findUserById")
 
 	public ModelAndView findById(@RequestParam("uid") int id, HttpServletRequest request, HttpServletResponse response)
 			throws ParseException, IOException {
@@ -348,7 +350,7 @@ public class UserController {
 	 * @param response
 	 * @return ModelAndView
 	 */
-	@RequestMapping("deleteUser")
+	@RequestMapping("user/deleteUser")
 	public ModelAndView deleteUser(@RequestParam("id") int uid, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("updumessage");
@@ -367,7 +369,7 @@ public class UserController {
 	 * 
 	 * @return ModelAndView
 	 */
-	@RequestMapping("jurisdiction")
+	@RequestMapping("user/jurisdiction")
 	public ModelAndView jurisdictionMa(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String auth = "auth";
@@ -388,7 +390,7 @@ public class UserController {
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping("findauth")
+	@RequestMapping("user/findauth")
 	@ResponseBody
 	public void findAuth(@RequestParam("id") int id, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -400,7 +402,7 @@ public class UserController {
 		writer.close();
 	}
 
-	@RequestMapping("updjru")
+	@RequestMapping("user/updjru")
 	public ModelAndView updjru(@RequestParam("uid") int id, @RequestParam("username") String username) {
 		return new ModelAndView("jsp/user/upd-jru").addObject("uid", id).addObject("usernae", username);
 	}
@@ -413,7 +415,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("updateauth")
+	@RequestMapping("user/updateauth")
 	public ModelAndView updateAuth(@RequestParam("userId") int uid, @RequestParam("uauth") int uauth,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -429,7 +431,7 @@ public class UserController {
 		return new ModelAndView("jsp/user/jurisdiction-ma").addObject("users", service.getUsers());
 	}
 
-	@RequestMapping("updpwd")
+	@RequestMapping("user/updpwd")
 	public ModelAndView updpwd(@RequestParam("uid") int uid) {
 		return new ModelAndView("jsp/user/upd-pwd").addObject("uid", uid);
 	}
@@ -445,7 +447,7 @@ public class UserController {
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	@RequestMapping("updatepwd")
+	@RequestMapping("user/updatepwd")
 	public ModelAndView updatePwd(@RequestParam("uid") int uid, @RequestParam("oldpwd") String oldpwd,
 			@RequestParam("newpwd") String newpwd, @RequestParam("newpwd1") String newpwd1,
 			HttpServletRequest request) {

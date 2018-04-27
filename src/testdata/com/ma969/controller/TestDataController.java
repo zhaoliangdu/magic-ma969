@@ -42,6 +42,7 @@ import com.ma969.service.RadioDataService;
  * @time 创建时间：2017年11月9日上午9:50:10
  */
 @Controller
+@RequestMapping("datapoint")
 public class TestDataController {
 	@Autowired
 	SystemSetService systemService;
@@ -298,12 +299,10 @@ public class TestDataController {
 			points = analogDataService.listPoints(uid, typeId);
 		}
 		String json = new Gson().toJson(points).trim();
-
+		System.err.println(json);
 		writer.println(json);
 		writer.flush();
 		writer.close();
 	}
-
-	
 	
 }

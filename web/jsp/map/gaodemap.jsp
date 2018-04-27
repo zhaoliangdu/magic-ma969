@@ -1,53 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:include page="../top.jsp"></jsp:include>
-<jsp:include page="../main.jsp"></jsp:include>
+<jsp:include page="../../jsp/top.jsp"></jsp:include>
+<jsp:include page="../../jsp/main.jsp"></jsp:include>
 <script type="text/javascript"
 	src="http://webapi.amap.com/maps?v=1.4.0&key=100ac2f2d36ccc13f62f1f86617ca9e3"></script>
 <script type="text/javascript"
 	src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
-<div id="page-wrapper" style="min-width: 600px;">
-	<div class="row">
-		<div class="col-lg-12" style="min-width: 600px;">
-			<!-- /.panel -->
-			<div class="panel panel-default">
-				<div class="panel-heading">高德地图</div>
-				<!-- /.panel-heading -->
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-								<div class="panel-body">
-									<strong>数据类型选择：</strong><select style="width: 100px; height: 33px;"
-										id="testmodeId" class="inptcs">
-										<option value="1">数字电视</option>
-										<option value="2">调频/调幅</option>
-										<option value="3">CDR</option>
-										<option value="4">模拟电视</option>
-									</select> <input type="button" class="btn btn-info" value="加载采样点"
-										onclick="addgpoints()" /> <input type="button"
-										class="btn btn-info" value="生成场强图" /> <input type="button"
-										class="btn btn-info" value="距离量测"
-										onClick="javascript:startRuler2()" /> <input type="button"
-										class="btn btn-info" value="面积计算" onclick="mainji()">
-									<input type="text" readonly="readonly" id="lnglat"
-										style="width: 240px; height: 33px;" class="inptcs" /> &nbsp;&nbsp;<input
-										type="checkbox" id="gdcheck" onclick="gdcheck()" /><strong> 显示发射塔</strong>
-								</div>
-							</div>
-							<div id="container" style="width: 100%; height:700px;"></div>
-						</div>
-					</div>
-					<!-- /.row -->
+
+<!-- 右侧主体开始 -->
+<div class="page-content">
+	<div class="content">
+		<!-- 右侧内容框架，更改从这里开始 -->
+		<fieldset class="layui-elem-field layui-field-title site-title">
+			<legend>
+				<a name="default">高德地图</a>
+			</legend>
+		</fieldset>
+		<xblock>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">数据类型：</label>
+				<div class="layui-input-inline">
+					<select id="testmodeId" class="layui-input "
+						onchange="getTestMode(this)">
+						<option value="1">数字电视</option>
+						<option value="2">调频/调幅</option>
+						<option value="3">CDR</option>
+						<option value="4">模拟电视</option>
+					</select>
 				</div>
-				<!-- /.panel-body -->
 			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">模式选择：</label>
+				<div class="layui-input-inline">
+					<select id="typeid" class="layui-input">
+						<option value="0">场强</option>
+						<option value="1">信噪比</option>
+						<option value="2">误包率</option>
+					</select>
+				</div>
+			</div>
+			<input type="button" class="layui-btn layui-btn-normal" value="加载采样点"
+				onclick="addgpoints()" /> <input type="button"
+				class="layui-btn layui-btn-normal" value="距离量测"
+				onClick="javascript:startRuler2()" /> <input type="button"
+				class="layui-btn layui-btn-normal" value="面积计算" onclick="mainji()"><input
+				type="checkbox" onclick="gdcheck()" id="gdcheck" title="" />&nbsp;&nbsp;显示台站
+
 		</div>
+		</xblock>
+		<div id="container"
+			style="width: 100%; min-height: 800px; min-width: 900px; height: 100%; color: black;"></div>
+		<!-- 右侧内容框架，更改从这里结束 -->
 	</div>
-	<!-- /.row -->
 </div>
+<!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+
 <jsp:include page="../bottom.jsp"></jsp:include>
+
 <script>
 	//高德地图  
 	var map = new AMap.Map('container', {
@@ -59,21 +72,22 @@
 		center : [ 106.001, 37.2000 ]
 	});
 	var clickEventListener = map.on('mousemove', function(e) {
-		document.getElementById("lnglat").value = "经度："
+		document.getElementById("lnglat").innerHTML = "经度："
 				+ e.lnglat.getLng().toFixed(4) + ',纬度：'
 				+ e.lnglat.getLat().toFixed(4)
 	});
+	$("<div id='lnglat' ></div>").appendTo($("#container"));
 	AMap.event.addDomListener(document.getElementById('gdcheck'), 'click',
 			function() {
 				map.remove(markers);
 			}, false);
 	var markers = [], positions = [];
-	
+
 	function gdcheck() {
 		var gdck = document.getElementById("gdcheck").checked;
 		if (gdck) {
 			$.ajax({
-				url : "gettranlocation",
+				url : "${pageContext.servletContext.contextPath }/emitter/gettranlocation",
 				type : "post",
 				success : function(tran) {
 					var infoWindow = new AMap.InfoWindow({
@@ -129,7 +143,7 @@
 						};
 						var lOptions = {
 							strokeStyle : "solid",
-							strokeColor : "#FF33FF",
+							strokeColor : "#6699ff",
 							strokeOpacity : 1,
 							strokeWeight : 2
 						};
@@ -185,35 +199,19 @@
 	//加载采样点
 	function addgpoints() {
 		$('<div id="loadingTip">加载数据，请稍候...</div>').appendTo($("#container"));
-		testmodeId = $("#testmodeId").val();
-
-		var colorArray = new Array();
-		//场强范围对应颜色表
-		$.ajax({
-			url : "getsamplestyle",
-			type : "get",
-			data : {
-				"uid" : $("#uid").val(),
-				"typeId":0
-			},
-			success : function(colors) {
-				for (var i = 0; i < colors.length; i++) {
-					colorArray[i] = colors[i];
-				}
-				 
-			}
-		});
-
+		testmodeId = $("#testmodeId").val(); 
+		 
 		$
 				.ajax({
-					url : "getpoints",
+					url : "${pageContext.servletContext.contextPath }/datapoint/getpoints",
 					type : "post",
 					data : {
 						"uid" : $("#uid").val(),
 						"testModeId" : testmodeId,
-						"typeId":0
+						"typeId" : 0
 					},
 					success : function(val) {
+						var colorArray  = val[2];
 						$("#loadingTip").empty();
 						$(
 								'<div id="loadingTip" style="background-color:#6699ff">加载完成!</div>')
@@ -244,12 +242,6 @@
 									.extend(
 											MyCanvasRender.prototype,
 											{
-												/**
-												 * 重新实现点的绘制方法
-												 * @param  {number} zoom       当前的地图级别
-												 * @param  {Array} activePoints 可以正常绘制的点
-												 * @param  {Array} shadowPoints 空间被占用的点
-												 */
 												renderNormalPoints : function(
 														zoom, activePoints,
 														shadowPoints) {
@@ -298,98 +290,148 @@
 													}
 												}
 											});
-							var pointSimplifierIns = new PointSimplifier({
-								zIndex : 300,
-								map : map,
-								getPosition : function(item) {
-									if (!item) {
-										return null;
-									}
-									return item.position;
-								},
-								getHoverTitle : function(dataItem, i) {
-									return "<hr>时间：" + val[1][i].time.substring(0,(val[1][i].time.length)-2)
-											+ "<br>频率：" + val[1][i].frequency
-											+ "(MHz)<br>经度：" + val[1][i].lon
-											+ "&nbsp;&nbsp;纬度：" + val[1][i].lat
-											+ "<br>场强值：" + val[1][i].field
-											+ "<br>高度：" + val[1][i].height
-											+ "<br>距离：" + val[1][i].distance
-											+ "<br>信噪比："+val[1][i].snr
-											+ "<br>方位角：" + val[1][i].angle;
-								},
-								//赋值为 MyCanvasRender
-								renderConstructor : MyCanvasRender,
-								renderOptions : {
-									getPointsGroupKey : function(dataItem,
-											dataIndex) {
-										//这里直接按索引取余 
-										return 'g' + dataIndex % 5;
-									},
-									//分组配置
-									pointStyleGroup : {
-										'g0' : {
-											fillStyle : colorArray[0],
-											width : 16,
-											height : 16
+							var cindex;
+							var pointSimplifierIns = new PointSimplifier(
+									{
+										zIndex : 300,
+										map : map,
+										getPosition : function(item) {
+											if (!item) {
+												return null;
+											}
+											return item.position;
 										},
-										'g1' : {
-											fillStyle : colorArray[1],
-											width : 16,
-											height : 16
+										getHoverTitle : function(dataItem, i) {
+											return "<hr>时间："
+													+ val[1][i].time
+															.substring(
+																	0,
+																	(val[1][i].time.length) - 2)
+													+ "<br>频率："
+													+ val[1][i].frequency
+													+ "(MHz)<br>经度："
+													+ val[1][i].lon
+													+ "&nbsp;&nbsp;纬度："
+													+ val[1][i].lat
+													+ "<br>场强值："
+													+ val[1][i].field
+													+ "<br>高度："
+													+ val[1][i].height
+													+ "<br>距离："
+													+ val[1][i].distance
+													+ "<br>信噪比："
+													+ val[1][i].snr
+													+ "<br>方位角："
+													+ val[1][i].angle;
 										},
-										'g2' : {
-											fillStyle : colorArray[2],
-											width : 16,
-											height : 16
-										},
-										'g3' : {
-											fillStyle : colorArray[3],
-											width : 16,
-											height : 16
-										},
-										'g4' : {
-											fillStyle : colorArray[4],
-											width : 16,
-											height : 16
-										},
-										'g5' : {
-											fillStyle : colorArray[5],
-											width : 16,
-											height : 16
-										},
-										'g6' : {
-											fillStyle : colorArray[6],
-											width : 16,
-											height : 16
-										},
-										'g7' : {
-											fillStyle : colorArray[7],
-											width : 16,
-											height : 16
-										},
-										'g8' : {
-											fillStyle : colorArray[8],
-											width : 16,
-											height : 16
-										},
-										'g9' : {
-											fillStyle : colorArray[9],
-											width : 16,
-											height : 16
-										},
-										'g10' : {
-											fillStyle : colorArray[10],
-											width : 16,
-											height : 16
-										}
-										
-									}
-									
-								}
-							});
+										//赋值为 MyCanvasRender
+										renderConstructor : MyCanvasRender,
+										renderOptions : {
+											getPointsGroupKey : function(
+													dataItem, dataIndex) {
+												//这里直接按索引取余  
+												for (var i = 0; i < val[1].length; i++) {
+													if (dataItem.position[0] == val[1][i].lon
+															&& dataItem.position[1] == val[1][i].lat) {
+														for (var c = 0; c < val[0].length; c++) {
+															if (val[1][i].field > val[0][c]
+																	.split("-")[0]
+																	&& val[1][i].field <= val[0][c]
+																			.split("-")[1]) {
+																cindex = c;
+																break;
+															}
+														}
+														break;
+													}
 
-							//随机创建一批点，仅作示意
+												}
+
+												return "g" + cindex;
+											},
+											//分组配置
+											pointStyleGroup : {
+												'g0' : {
+													fillStyle : colorArray[0],
+													width : 16,
+													height : 16
+												},
+												'g1' : {
+													fillStyle : colorArray[1],
+													width : 16,
+													height : 16
+												},
+												'g2' : {
+													fillStyle : colorArray[2],
+													width : 16,
+													height : 16
+												},
+												'g3' : {
+													fillStyle : colorArray[3],
+													width : 16,
+													height : 16
+												},
+												'g4' : {
+													fillStyle : colorArray[4],
+													width : 16,
+													height : 16
+												},
+												'g5' : {
+													fillStyle : colorArray[5],
+													width : 16,
+													height : 16
+												},
+												'g6' : {
+													fillStyle : colorArray[6],
+													width : 16,
+													height : 16
+												},
+												'g7' : {
+													fillStyle : colorArray[7],
+													width : 16,
+													height : 16
+												},
+												'g8' : {
+													fillStyle : colorArray[8],
+													width : 16,
+													height : 16
+												},
+												'g9' : {
+													fillStyle : colorArray[9],
+													width : 16,
+													height : 16
+												},
+												'g10' : {
+													fillStyle : colorArray[10],
+													width : 16,
+													height : 16
+												},
+												'g11' : {
+													fillStyle : colorArray[11],
+													width : 16,
+													height : 16
+												},
+												'g12' : {
+													fillStyle : colorArray[12],
+													width : 16,
+													height : 16
+												},
+												'g13' : {
+													fillStyle : colorArray[13],
+													width : 16,
+													height : 16
+												},
+												'g14' : {
+													fillStyle : colorArray[14],
+													width : 16,
+													height : 16
+												}
+											}
+
+										}
+									});
+
+							//创建数据点
 							var data = createPoints(val[1]);
 
 							//设置数据源，data需要是一个数组
@@ -402,6 +444,7 @@
 										console.log(e.type, record);
 									});
 						}
+
 						//创建数据
 						function createPoints(val) {
 							var data = [];

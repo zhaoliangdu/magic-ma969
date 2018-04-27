@@ -14,7 +14,7 @@
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<xblock>
 		<form class="layui-form xbs" method="get" id="datasearch"
-			action="${pageContext.servletContext.contextPath }/digitaldata">
+			action="${pageContext.servletContext.contextPath }/datapoint/digitaldata">
 			<input hidden="hidden" name="uid" value="${user.userId }">
 			<div class="layui-form-pane" style="text-align: center;">
 				<div class="layui-form-item" style="display: inline-block;">
@@ -46,9 +46,9 @@
 		</form>
 
 		<a class="layui-btn layui-btn-normal"
-			href="${pageContext.servletContext.contextPath }/exportdigitaldata?type=txt">导出到txt</a>
+			href="${pageContext.servletContext.contextPath }/datapoint/exportdigitaldata?type=txt">导出到txt</a>
 		<a class="layui-btn layui-btn-normal"
-			href="${pageContext.servletContext.contextPath }/exportdigitaldata?type=excel">导出到excel</a>
+			href="${pageContext.servletContext.contextPath }/datapoint/exportdigitaldata?type=excel">导出到excel</a>
 		</xblock>
 		<table class="layui-table">
 			<thead>
@@ -75,7 +75,7 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${digitaldatas }" var="digitaldata">
-					<tr> 
+					<tr>
 						<td>${digitaldata.id }</td>
 						<td>${digitaldata.time }</td>
 						<td>${digitaldata.area }</td>
@@ -131,54 +131,50 @@
 				</c:if>
 			</c:otherwise>
 		</c:choose>
-		<center>
-			<table style="width: 40%;">
-				<thead>
-					<tr>
-						<th>共${count}条/${pageNum }页</th>
-						<th><a class="layui-btn layui-btn-normal"
-							href="${pageContext.servletContext.contextPath }/digitaldata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-							pageNo="0"> 首页 </a></th>
-						<c:if test="${pageNo-1 <=0}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/digitaldata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}">
-									上一页 </a></th>
-						</c:if>
-						<c:if test="${pageNo-1>0}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/digitaldata?pageNo=${pageNo-1 }&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNo-1 }"> 上一页 </a></th>
-						</c:if>
-						<c:forEach begin="${sta }" end="${end }" var="er">
-							<c:if test="${pageNo==er }">
-								<th><a class="layui-btn layui-btn-normal"
-									href="${pageContext.servletContext.contextPath }/digitaldata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-									pageNo="${er }"> ${er } </a></th>
-							</c:if>
-							<c:if test="${pageNo!=er }">
-								<th><a class="layui-btn layui-btn-normal"
-									href="${pageContext.servletContext.contextPath }/digitaldata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-									pageNo="${er }"> ${er } </a></th>
-							</c:if>
-						</c:forEach>
-						<c:if test="${pageNo+1 >pageNum}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/digitaldata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNum }"> 下一页 </th>
-							</td>
-						</c:if>
-						<c:if test="${pageNo+1<=pageNum}">
-							<th><a class="layui-btn layui-btn-normal"
-								href="${pageContext.servletContext.contextPath }/digitaldata?pageNo=${pageNo+1}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-								pageNo="${pageNo+1 })"> 下一页 </a></th>
-						</c:if>
-						<th><a class="layui-btn layui-btn-normal"
-							href="${pageContext.servletContext.contextPath }/digitaldata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
-							pageNo="${pageNum})"> 尾页 </a></th>
-					</tr>
-				</thead>
-			</table>
-		</center>
+		<div style="text-align: center;">
+			<ul id="menu">
+				<li>当前第${pageNo }页&nbsp;共${count}条/${pageNum }页</li>
+				<li><a
+					href="${pageContext.servletContext.contextPath }/datapoint/digitaldata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+					pageNo="0"> 首页 </a></li>
+				<c:if test="${pageNo-1 <=0}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/datapoint/digitaldata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}">
+							上一页 </a></li>
+				</c:if>
+				<c:if test="${pageNo-1>0}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/datapoint/digitaldata?pageNo=${pageNo-1 }&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNo-1 }"> 上一页 </a></li>
+				</c:if>
+				<c:forEach begin="${sta }" end="${end }" var="er">
+					<c:if test="${pageNo==er }">
+						<li><a
+							href="${pageContext.servletContext.contextPath }/datapoint/digitaldata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+							pageNo="${er }"> ${er } </a></li>
+					</c:if>
+					<c:if test="${pageNo!=er }">
+						<li><a
+							href="${pageContext.servletContext.contextPath }/datapoint/digitaldata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+							pageNo="${er }"> ${er } </a></li>
+					</c:if>
+				</c:forEach>
+				<c:if test="${pageNo+1 >pageNum}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/datapoint/digitaldata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNum }"> 下一页 </a></li>
+					</td>
+				</c:if>
+				<c:if test="${pageNo+1<=pageNum}">
+					<li><a
+						href="${pageContext.servletContext.contextPath }/datapoint/digitaldata?pageNo=${pageNo+1}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+						pageNo="${pageNo+1 })"> 下一页 </a></li>
+				</c:if>
+				<li><a
+					href="${pageContext.servletContext.contextPath }/datapoint/digitaldata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+					pageNo="${pageNum})"> 尾页 </a></li>
+			</ul>
+		</div>
 		<!-- 右侧内容框架，更改从这里结束 -->
 	</div>
 </div>
@@ -215,7 +211,7 @@ layui.use('table', function(){
 	function deldigital(id) {
 		if (window.confirm("确定删除吗？")) {
 			$.ajax({
-				url : "deldigitaldata",
+				url : "${pageContext.servletContext.contextPath }/datapoint/deldigitaldata",
 				type : "post",
 				data : {
 					"id" : id

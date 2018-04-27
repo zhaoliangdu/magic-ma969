@@ -13,7 +13,7 @@
 		</fieldset>
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<center>
-			<form role="form" action="updatesystemset" method="post"
+			<form role="form" action="${pageContext.servletContext.contextPath }/systemset/updatesystemset" method="post"
 				id="syssetform">
 				<div class="panel-title" style="font-size: 1.2em; color: red">${sysmsg }</div>
 				<input type="hidden" value="${uid}" name="uid" /><strong></strong>
@@ -84,7 +84,7 @@
 				<br>
 				<button type="submit" class="layui-btn" onclick="save()">保&nbsp;&nbsp;存</button>
 				&nbsp;&nbsp; <a
-					href="${pageContext.servletContext.contextPath }/resetsystemset?uid=${uid }"
+					href="${pageContext.servletContext.contextPath }/systemset/resetsystemset?uid=${uid }"
 					class="layui-btn layui-btn-primary">恢复默认设置</a>
 			</form>
 		</center>
@@ -107,11 +107,11 @@
 			<label class="layui-form-label">缓存大小：</label>
 			<div class="layui-input-inline">
 				<span id="tempsize"></span>&nbsp;&nbsp;<a
-					href="${pageContext.servletContext.contextPath}/cleartempfiles"
+					href="${pageContext.servletContext.contextPath}/systemset/cleartempfiles"
 					class="layui-btn">清理缓存</a>
 			</div>
 			<input hidden="hidden" id="locationset"
-				value="${pageContext.servletContext.contextPath}/getsystemset?typeId=" />
+				value="${pageContext.servletContext.contextPath}/systemset/getsystemset?typeId=" />
 		</div>
 		<!-- 右侧内容框架，更改从这里结束 -->
 	</div>
@@ -142,25 +142,13 @@
 </script>
 
 <script>
-	//页面加载获取背景颜色
-	$(document).ready(function() {
-		$.ajax({
-			url : "getbgcolorfont",
-			type : "post",
-			data : {
-				"uid" : $("#uid").val()
-			},
-			success : function(systemset) {
-				$("body").css("font-size", systemset.fontSize + "px");
-			}
-		});
-	});
+ 
 	//设置字体
 	function changebg() {
 		var fontstyle = $("#setfont").val();
 		var fontsize = $("#fontsize").val();
 		$.ajax({
-			url : "updatefont",
+			url : "${pageContext.servletContext.contextPath }/systemset/updatefont",
 			type : "post",
 			data : {
 				"fontsize" : fontsize,
@@ -179,7 +167,7 @@
 <script>
 	$(document).ready(function() {
 		$.ajax({
-			url : "gettempsize",
+			url : "${pageContext.servletContext.contextPath }/systemset/gettempsize",
 			type : "post",
 			success : function(val) {
 				$("#tempsize").text(val);

@@ -30,8 +30,8 @@ public class MagicRobot {
 		HttpURLConnection connection;
 		StringBuffer sb = null;
 		try {
-			String INFO = URLEncoder.encode(context, "utf-8");
-			String getURL = "http://www.tuling123.com/openapi/api?key=" + TL_API_KEY + "&info=" + INFO;
+			String info = URLEncoder.encode(context, "utf-8");
+			String getURL = "http://www.tuling123.com/openapi/api?key=" + TL_API_KEY + "&info=" + info;
 			URL getUrl = new URL(getURL);
 			connection = (HttpURLConnection) getUrl.openConnection();
 			connection.connect();
@@ -65,11 +65,11 @@ public class MagicRobot {
 		String text = (String) maps.get("text");
 		String url = (String) maps.get("url");
 		String location = (String) maps.get("location");
-		if(url!=null) {
+		if (url != null) {
 			text = url != null ? text + "-<a href='" + url + "' target='_blank'>打开链接</a>" : text;
-		}else if (location!=null) {
+		} else if (location != null) {
 			text = location != null ? text + "-" + location : text;
-		} 
+		}
 		return text;
 	}
 
@@ -84,7 +84,7 @@ public class MagicRobot {
 
 		// 可选：设置网络连接参数
 		client.setConnectionTimeoutInMillis(2000);
-		client.setSocketTimeoutInMillis(60000); 
+		client.setSocketTimeoutInMillis(60000);
 
 		// 调用接口
 		TtsResponse res = client.synthesis(context, "zh", 1, null);

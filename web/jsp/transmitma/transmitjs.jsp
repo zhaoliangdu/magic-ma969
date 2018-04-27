@@ -16,7 +16,7 @@
 			return false;
 		} else {
 			$.ajax({
-				url : "addantenna",
+				url : "${pageContext.servletContext.contextPath }/emitter/addantenna",
 				type : "post",
 				data : {
 					"aantennaType" : $("#aantennaType").val(),
@@ -47,7 +47,7 @@
 		var channelval = channel.options[channel.selectedIndex].value;
 		var chans = document.getElementById("aschannel");
 		$.ajax({
-			url : "addChannelByantId",
+			url : "${pageContext.servletContext.contextPath }/emitter/addChannelByantId",
 			type : "post",
 			data : {
 				"aId" : aId,
@@ -66,7 +66,7 @@
 		var channelval = channel.options[channel.selectedIndex].value;
 		var index = channel.selectedIndex;
 		$.ajax({
-			url : "delchannel",
+			url : "${pageContext.servletContext.contextPath }/emitter/delchannel",
 			type : "post",
 			data : {
 				"channel" : channelval
@@ -82,7 +82,7 @@
 		var aId = $("#antennaId").val();
 		var frequency = $("#afrequency").val();
 		$.ajax({
-			url : "addFrequencByaId",
+			url : "${pageContext.servletContext.contextPath }/emitter/addFrequencByaId",
 			type : "post",
 			data : {
 				"aId" : aId,
@@ -101,7 +101,7 @@
 		var frequencyval = frequency.options[frequency.selectedIndex].value;
 		var index = frequency.selectedIndex;
 		$.ajax({
-			url : "delfrequency",
+			url : "${pageContext.servletContext.contextPath }/emitter/delfrequency",
 			type : "post",
 			data : {
 				"frequency" : frequencyval
@@ -117,7 +117,7 @@
 	function selectTransmit() {
 		$("#transmitS").empty();
 		$.ajax({
-			url : "selecttransmit",
+			url : "${pageContext.servletContext.contextPath }/emitter/selecttransmit",
 			type : "get",
 			data : {
 				"stName" : $("#stName").val(),
@@ -148,7 +148,7 @@
 		var chans = document.getElementById("schannel");
 		var aid = $("#aid").val(); 
 		$.ajax({
-			url : "addchannel",
+			url : "${pageContext.servletContext.contextPath }/emitter/addchannel",
 			type : "post",
 			data : {
 				"aid" : aid,
@@ -167,7 +167,7 @@
 		var aid = $("#aid").val();
 		var frequency = $("#frequency").val();
 		$.ajax({
-			url : "addfrequency",
+			url : "${pageContext.servletContext.contextPath }/emitter/addfrequency",
 			type : "post",
 			data : {
 				"aid" : aid,
@@ -189,7 +189,7 @@
 		var index = channel.selectedIndex;
 		if (auth > 0) {
 			$.ajax({
-				url : "delchannel",
+				url : "${pageContext.servletContext.contextPath }/emitter/delchannel",
 				type : "post",
 				data : {
 					"channel" : channelval
@@ -215,7 +215,7 @@
 		if (auth > 0) {
 
 			$.ajax({
-				url : "delfrequency",
+				url : "${pageContext.servletContext.contextPath }/emitter/delfrequency",
 				type : "post",
 				data : {
 					"frequency" : frequency
@@ -238,7 +238,7 @@
 		var auth = $("#userauth").val();
 		if (auth >= 1) {
 			$.ajax({
-				url : "updatetransmit",
+				url : "${pageContext.servletContext.contextPath }/emitter/updatetransmit",
 				type : "post",
 				data : {
 					"tId" : trId,
@@ -290,7 +290,7 @@
 				} else {
 					//删除发射台
 					$.ajax({
-						url : "deletetransmit",
+						url : "${pageContext.servletContext.contextPath }/emitter/deletetransmit",
 						type : "post",
 						data : {
 							"tid" : trId
@@ -321,7 +321,7 @@
 		var trId = tran.options[tran.selectedIndex].value;
 		//根据发射台id加载发射台信息
 		$.ajax({
-			url : "findByTransmitId",
+			url : "${pageContext.servletContext.contextPath }/emitter/findByTransmitId",
 			type : "get",
 			data : {
 				"tid" : trId
@@ -360,7 +360,7 @@
 				//加载频道列表
 				$
 						.ajax({
-							url : "getchannel",
+							url : "${pageContext.servletContext.contextPath }/emitter/getchannel",
 							type : "get",
 							data : {
 								"aid" : tran.aId
@@ -376,7 +376,7 @@
 						});
 				//加载频率列表
 				$.ajax({
-					url : "getfrequency",
+					url : "${pageContext.servletContext.contextPath }/emitter/getfrequency",
 					type : "get",
 					data : {
 						"aid" : tran.aId
@@ -412,7 +412,7 @@
 	$(document).ready(
 			function() {
 				$.ajax({
-					url : "loadTransmit",
+					url : "${pageContext.servletContext.contextPath }/emitter/loadTransmit",
 					type : "get",
 					success : function(transmit) {
 						for (var i = 0; i < transmit.length; i++) {
@@ -434,7 +434,7 @@
 		$("#trfrequency").empty();
 		//加载动态发射台面板
 		$.ajax({
-			url : "findByTransmitId",
+			url : "${pageContext.servletContext.contextPath }/emitter/findByTransmitId",
 			type : "get",
 			data : {
 				"tid" : trId
@@ -486,7 +486,7 @@
 				$("#ftrgrounding").text(tran.grounding);
 				$("#ftrairConditioner").text(tran.airConditioner);
 				$.ajax({
-					url : "getchannel",
+					url : "${pageContext.servletContext.contextPath }/emitter/getchannel",
 					type : "get",
 					data : {
 						"aid" : tran.aId
@@ -514,7 +514,7 @@
 					}
 				});
 				$.ajax({
-					url : "getfrequency",
+					url : "${pageContext.servletContext.contextPath }/emitter/getfrequency",
 					type : "get",
 					data : {
 						"aid" : tran.aId

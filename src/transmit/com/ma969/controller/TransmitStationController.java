@@ -44,6 +44,7 @@ import com.ma969.beans.Transmit;
  * @time 创建时间：2017年11月9日上午9:18:12
  */
 @Controller
+@RequestMapping("emitter")
 public class TransmitStationController {
 	@Autowired
 	TransmitService transmitService;

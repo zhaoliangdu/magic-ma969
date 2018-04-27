@@ -15,7 +15,7 @@
 
 		<xblock> <!-- 导入 -->
 		<form
-			action="${pageContext.servletContext.contextPath }/uploadTransmitTxt"
+			action="${pageContext.servletContext.contextPath }/emitter/uploadTransmitTxt"
 			method="post" enctype="multipart/form-data">
 			<div class="layui-form-item">
 				<div class="layui-inline">
@@ -33,9 +33,9 @@
 			<c:choose>
 				<c:when test="${auth==2 }">
 					<a class="layui-btn"
-						href="${pageContext.servletContext.contextPath }/exporttransmit?type=excel">导出excel</a>
+						href="${pageContext.servletContext.contextPath }/emitter/exporttransmit?type=excel">导出excel</a>
                               &nbsp; <a class="layui-btn"
-						href="${pageContext.servletContext.contextPath }/exporttransmit?type=txt">导出txt</a>
+						href="${pageContext.servletContext.contextPath }/emitter/exporttransmit?type=txt">导出txt</a>
 				</c:when>
 			</c:choose>
 		</div>
@@ -231,7 +231,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="layui-form-item layui-form-text">
+		<div class="layui-form-item layui-form-text" id="reportprint">
 			<label class="layui-form-label">塔桅报告：</label>
 			<div class="layui-input-block">
 				<textarea placeholder="请输入内容" name="utowerReport" id="towerReport"
@@ -323,6 +323,7 @@
 <!-- 中部结束 -->
 <jsp:include page="../bottom.jsp"></jsp:include>
 <jsp:include page="transmitjs.jsp"></jsp:include>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resource/js/jquery.PrintArea.js"></script>
 <script>
 	function doPrint() {
 		$("#reportprint").printArea();

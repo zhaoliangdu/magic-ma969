@@ -6,15 +6,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap; 
+import java.util.TreeMap;  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
+import org.springframework.web.multipart.commons.CommonsMultipartFile; 
 import com.ma969.beans.AnalogData;
 import com.ma969.beans.CDRData;
 import com.ma969.beans.DataMode;
@@ -29,7 +28,7 @@ import com.ma969.dao.DigitalDataMapper;
 import com.ma969.dao.RadioDataMapper;
 import com.ma969.dao.TvSignalMapper;
 import com.ma969.utils.CalculationTools;
-import com.ma969.utils.OperationFileUtils;
+import com.ma969.utils.OperationFileUtils; 
 
 /**
  * @author 作者: ZhaoLiangdu
@@ -134,32 +133,46 @@ public class TestDataService {
 		return true;
 	}
 
+	@SuppressWarnings({ "unused", "unchecked", "rawtypes" })
 	public List<Map<String, Object>> getPointStatistics() {
 		List<DataMode> listDataModes = dataModeMapper.listDataModes();
 		int acount = aMapper.getSampleCount();
 		int ccount = cMapper.getSampleCount();
 		int dcount = dMapper.getSampleCount();
 		int rcount = rMapper.getSampleCount();
+		List<String> aAreas = aMapper.listAreas();
+		List<String> cAreas = cMapper.listAreas();
+		List<String> dAreas = dMapper.listAreas();
+		List<String> rAreas = rMapper.listAreas();
+		
 		List<Map<String, Object>> listmap = new ArrayList();
-		HashMap map1 = new HashMap<>();
+		HashMap<String,Object> map1 = new HashMap<>();
 		map1.put("url", "digitaldata");
 		map1.put("testmode", "数字电视");
+		map1.put("testmodeId",1);
 		map1.put("count", dcount);
+		map1.put("areas",dAreas);
 		listmap.add(map1);
-		HashMap map2 = new HashMap<>();
+		HashMap<String,Object> map2 = new HashMap<>();
 		map2.put("url", "analogdata");
 		map2.put("testmode", "模拟电视");
+		map2.put("testmodeId",4);
 		map2.put("count", acount);
+		map2.put("areas", aAreas);
 		listmap.add(map2);
-		HashMap map3 = new HashMap<>();
+		HashMap<String,Object> map3 = new HashMap<>();
 		map3.put("url", "cdrdata");
 		map3.put("testmode", "CDR");
+		map3.put("testmodeId",3);
 		map3.put("count", ccount);
+		map3.put("areas", cAreas);
 		listmap.add(map3);
-		HashMap map4 = new HashMap<>();
+		HashMap<String,Object> map4 = new HashMap<>();
 		map4.put("url", "radiodata");
 		map4.put("testmode", "调幅调频");
+		map4.put("testmodeId",2);
 		map4.put("count", rcount);
+		map4.put("areas", rAreas);
 		listmap.add(map4);
 		System.err.println(listmap);
 		return listmap;
@@ -316,15 +329,31 @@ public class TestDataService {
 			List<TreeMap<String, Float>> newmapList = new ArrayList<>();
 			int angle = 360, increasing = 5;
 			fieldRanList.forEach(treeMap -> {
+
 				for (int a = 0; a <= angle; a += increasing) {
 					if (Math.abs(a - treeMap.get("angle")) < 1) {
+
+						System.err.println(treeMap);
 						newmapList.add(treeMap);
 					}
 				}
 			});
 			fieldOverlayList.add(newmapList);
 		});
+		System.err.println(fieldOverlayList);
 		return fieldOverlayList;
+	}
+
+	public static int comparator(TreeMap<String, Float> map1, TreeMap<String, Float> map2) {
+		if (map1 == null && map2 == null)
+			return 0;
+		if (map1 == null || map2 == null) {
+			throw new NullPointerException();
+		}
+		Float distance1 = (Float) map1.get("distance");
+		Float distance2 = (Float) map2.get("distance");
+
+		return Float.compare(distance2, distance1);
 	}
 
 	public List<TvSignal> listTVSignals() {

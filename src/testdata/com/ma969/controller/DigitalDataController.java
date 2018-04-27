@@ -33,6 +33,7 @@ import me.jor.util.Help;
  * @time 创建时间：2017年11月10日下午1:16:22
  */
 @Controller
+@RequestMapping("datapoint")
 public class DigitalDataController {
 	@Autowired
 	DigitalDataService digitalDataService;

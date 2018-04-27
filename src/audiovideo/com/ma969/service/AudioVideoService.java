@@ -146,6 +146,7 @@ public class AudioVideoService {
 	 */
 	public boolean checkFileAndData(String filename, String fileRealPath, String type) {
 		boolean flag = false;
+		System.err.println(fileRealPath);
 		File file = new File(fileRealPath);
 		if (ATYPE.equals(type)) {
 			flag = audioMapper.findByFileName(filename) == 1 && file.exists();

@@ -49,7 +49,7 @@
 		testmodeId = $("#testmodeId option:selected").val();
 		area = $("#area option:selected").val();
 		$.ajax({
-			url : "getfieldStrength",
+			url : "${pageContext.servletContext.contextPath }/getfieldStrength",
 			type : "post",
 			data : {
 				"uid" : uid,
@@ -66,7 +66,7 @@
 	$(function($) {
 		testmodeId = $("#testmodeId").val();
 		$.ajax({
-			url : "getfieldStrength",
+			url : "${pageContext.servletContext.contextPath }/getfieldStrength",
 			type : "post",
 			data : {
 				"uid" : uid,

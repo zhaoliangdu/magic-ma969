@@ -45,7 +45,7 @@
 						<td><c:choose>
 								<c:when test="${auth==2 }">
 									<a href="#" class="layui-btn layui-btn-xs"
-										onclick="tvsignal_edit('修改电视信号分析仪','edit-tvsignal?id=${tvsignal.id}','600','500')">修改</a>
+										onclick="tvsignal_edit('修改电视信号分析仪','${pageContext.servletContext.contextPath }/datapoint/edit-tvsignal?id=${tvsignal.id}','600','500')">修改</a>
 									<a href="#" class="layui-btn layui-btn-danger"
 										onclick="deltvsignal(${tvsignal.id })">删除</a>
 								</c:when>
@@ -64,7 +64,7 @@
 </div>
 <!-- 中部结束 -->
 <input hidden="hidden"
-	value="${pageContext.servletContext.contextPath }/tvsignalview"
+	value="${pageContext.servletContext.contextPath }/datapoint/tvsignalview"
 	id="disview" />
 
 <jsp:include page="../bottom.jsp"></jsp:include>
@@ -72,7 +72,7 @@
  
 	function findTVSignalById(id){
 		$.ajax({
-			url:"findTVSignalById",
+			url:"${pageContext.servletContext.contextPath }/datapoint/findTVSignalById",
 			type:"get",
 			data:{"id":id},
 			success:function(tvsignal){
@@ -93,7 +93,7 @@
 	function deltvsignal(id){
 		if(window.confirm("确定删除吗？")){
 			$.ajax({
-				url:"deltvsignal",
+				url:"${pageContext.servletContext.contextPath }/datapoint/deltvsignal",
 				type:"post",
 				data:{"id":id},
 				success:function(val){

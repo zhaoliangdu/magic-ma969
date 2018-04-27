@@ -23,6 +23,7 @@ import com.ma969.service.TestDataService;
  * @time 创建时间：2017年11月9日上午9:50:27
  */
 @Controller
+@RequestMapping("map")
 public class MapController {
 	@Autowired
 	DigitalDataService digitalDataService;
@@ -112,25 +113,4 @@ public class MapController {
 		return new ModelAndView("jsp/map/gaodemap");
 	}
 
-	/**
-	 * 高德地图视图
-	 * 
-	 * @return
-	 */
-	@RequestMapping("supermap")
-	public ModelAndView supermap() {
-
-		return new ModelAndView("jsp/map/supermap");
-	}
-
-	/**
-	 * 高德地图
-	 * 
-	 * @return
-	 */
-	@RequestMapping("gaodetest")
-	public ModelAndView gaodetestMap() {
-
-		return new ModelAndView("jsp/map/gaodetest");
-	}
 }

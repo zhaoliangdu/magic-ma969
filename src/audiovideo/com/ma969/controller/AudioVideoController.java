@@ -29,6 +29,7 @@ import com.ma969.service.TransmitStationService;
  * @time 创建时间：2017年11月9日上午9:51:32
  */
 @Controller
+@RequestMapping("media")
 public class AudioVideoController {
 	@Autowired
 	AudioVideoService services;

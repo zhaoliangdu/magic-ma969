@@ -29,6 +29,7 @@
 					var antennaId = val[1];
 					$("#antennaId").val(antennaId);
 					if (addanten == 1) {
+						alert("天线添加成功！")
 						$("#chfre").show();
 						$("#cfcontext").show();
 						return;
@@ -46,20 +47,23 @@
 		var channel = document.getElementById("achannels");
 		var channelval = channel.options[channel.selectedIndex].value;
 		var chans = document.getElementById("aschannel");
-		$.ajax({
-			url : "${pageContext.servletContext.contextPath }/emitter/addChannelByantId",
-			type : "post",
-			data : {
-				"aId" : aId,
-				"channel" : channelval
-			},
-			success : function(val) {
-				if (val == 1) {
-					$("#aschannel").append(
-							"<option>" + channelval + "</option>");
+		if(aId!=null){
+			$.ajax({
+				url : "${pageContext.servletContext.contextPath }/emitter/addChannelByantId",
+				type : "post",
+				data : {
+					"aId" : aId,
+					"channel" : channelval
+				},
+				success : function(val) {
+					if (val == 1) {
+						$("#aschannel").append(
+								"<option>" + channelval + "</option>");
+					} 
 				}
-			}
-		});
+			});
+		}
+	
 	}
 	function adelChannel() {
 		var channel = document.getElementById("aschannel");

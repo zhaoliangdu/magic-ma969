@@ -12,8 +12,6 @@
 <script
 	src="${pageContext.servletContext.contextPath }/resource/js/jquery.cookie.js"></script>
 <script
-	src="${pageContext.servletContext.contextPath }/resource/js/Sellerber.js"></script>
-<script
 	src="${pageContext.servletContext.contextPath }/resource/js/shopFrame.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath }/resource/js/jquery.PrintArea.js"></script>

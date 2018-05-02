@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,7 +37,7 @@ import me.jor.util.Help;
  * @time 创建时间：2017年11月9日上午9:49:40
  */
 @Controller
- 
+
 public class UserController {
 	@Autowired
 	UserService service;
@@ -43,7 +45,7 @@ public class UserController {
 	SystemSetService systemService;
 	@Autowired
 	TestDataService testDataService;
-	
+
 	private static final Log LOG = LogFactory.getLog(UserController.class);
 
 	/**
@@ -59,7 +61,7 @@ public class UserController {
 		LOG.info("login-name:" + uname + "，time:" + LocalDateTime.now().toLocalTime().toString());
 		HttpSession session = request.getSession();
 		User user = service.findUserByName(uname);
-		if (!Help.isEmpty(user)) { 
+		if (!Help.isEmpty(user)) {
 			if (uname.equals(user.getUserName()) && Sha.getResult(uname + upwd).equals(user.getPassword())) {
 				String ipAddr = service.getIpAddr(request);
 				session.setAttribute("ipAddr", ipAddr);
@@ -118,14 +120,16 @@ public class UserController {
 	public ModelAndView regist(@RequestParam("username") String username, @RequestParam("auth") Integer auth,
 			@RequestParam("password") String password, @RequestParam("name") String name,
 			@RequestParam("userBirthday") String userBirthday, @RequestParam("userAddress") String userAddress,
-			@RequestParam("userPhone") String userPhone, @RequestParam("userCompany") String userCompany,
-			HttpServletRequest request, HttpServletResponse response) throws IOException {
+			@RequestParam("userPhone") String userPhone, @RequestParam("userEmail") String userEmail,
+			@RequestParam("userCompany") String userCompany, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		LOG.info("regist-" + username + "-time:" + LocalDateTime.now());
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		if (username != null && name != null && password != null && userBirthday != null && userAddress != null
 				&& userPhone != null && userCompany != null) {
-			User user = new User(auth, username, password, name, userBirthday, userAddress, userPhone, userCompany);
+			User user = new User(auth, username, password, name, userBirthday, userAddress, userPhone, userEmail,
+					userCompany);
 			if (service.findUserByName(username) == null) {
 				if (service.userRegist(user) == 1) {
 					systemService.addUserId(user.getUserId());
@@ -159,16 +163,17 @@ public class UserController {
 	public ModelAndView addUser(@RequestParam("username") String userName, @RequestParam("auth") Integer auth,
 			@RequestParam("password") String password, @RequestParam("name") String name,
 			@RequestParam("userBirthday") String userBirthday, @RequestParam("userAddress") String userAddress,
-			@RequestParam("userPhone") String userPhone, @RequestParam("userCompany") String userCompany,
-			@RequestParam("userauth") Integer uauth, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+			@RequestParam("userPhone") String userPhone, @RequestParam("userEmail") String userEmail,
+			@RequestParam("userCompany") String userCompany, @RequestParam("userauth") Integer uauth,
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		LOG.info("adduser-" + userName + "-time:" + LocalDateTime.now());
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		if (userName != null && name != null && password != null && userBirthday != null && userAddress != null
-				&& userPhone != null && userCompany != null) {
+				&& userPhone != null && userEmail != null && userCompany != null) {
 			if (service.findUserByName(userName) == null) {
-				User user = new User(auth, userName, password, name, userBirthday, userAddress, userPhone, userCompany);
+				User user = new User(auth, userName, password, name, userBirthday, userAddress, userPhone, userEmail,
+						userCompany);
 				if (service.userRegist(user) == 1) {
 					systemService.addUserId(user.getUserId());
 					session.setAttribute("addumsg", "注册成功！");
@@ -278,7 +283,7 @@ public class UserController {
 		} else {
 			session.setAttribute("ismodel", "true");
 		}
-		return new ModelAndView("jsp/user/adduser");
+		return new ModelAndView("jsp/user/add-user");
 	}
 
 	/**
@@ -300,15 +305,17 @@ public class UserController {
 		System.err.println("useid:" + use.get("id") + (use.get("id") == ""));
 		if (use.get(id) != null && use.get(usernameStr) != null && use.get(unameStr) != null
 				&& use.get("userBirthday") != null && use.get("userAddress") != null && use.get("userPhone") != null
-				&& use.get("userCompany") != null) {
+				&& use.get("userEmail") != null && use.get("userCompany") != null) {
 			int uid = Integer.parseInt(use.get("id"));
 			String username = use.get("username");
 			String uname = use.get("uname");
 			String birthdayStr = use.get("userBirthday");
 			String address = use.get("userAddress");
 			String phone = use.get("userPhone");
+			String email = use.get("userEmail");
 			String company = use.get("userCompany");
-			User user = new User(uid, username, uname, birthdayStr, address, phone, company);
+
+			User user = new User(uid, username, uname, birthdayStr, address, phone, email, company);
 			if (service.updateUser(user) == 1) {
 				session.setAttribute("updumessage", "修改成功!");
 			} else {
@@ -404,6 +411,7 @@ public class UserController {
 
 	@RequestMapping("user/updjru")
 	public ModelAndView updjru(@RequestParam("uid") int id, @RequestParam("username") String username) {
+
 		return new ModelAndView("jsp/user/upd-jru").addObject("uid", id).addObject("usernae", username);
 	}
 
@@ -420,7 +428,6 @@ public class UserController {
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("updateauthm");
-
 		User user = service.findById(uid);
 		user.setAuth(uauth);
 		if (service.updateUser(user) == 1) {
@@ -428,7 +435,7 @@ public class UserController {
 		} else {
 			session.setAttribute("updateauthm", "修改失败");
 		}
-		return new ModelAndView("jsp/user/jurisdiction-ma").addObject("users", service.getUsers());
+		return new ModelAndView("jsp/user/upd-jru");
 	}
 
 	@RequestMapping("user/updpwd")
@@ -480,5 +487,79 @@ public class UserController {
 			session.setAttribute("updumessage", "用户不存在！");
 		}
 		return new ModelAndView("/jsp/user/user-ma").addObject("userlist", service.getUsers());
+	}
+
+	/**
+	 * 发送验证码
+	 * 
+	 * @param username
+	 * @param email
+	 * @param response
+	 * @param request
+	 * @throws IOException
+	 */
+	@RequestMapping("sendemail")
+	@ResponseBody
+	public void sendEmail(@RequestParam("username") String username, @RequestParam("email") String email,
+			HttpServletResponse response, HttpServletRequest request) throws IOException {
+		User findUserByName = service.findUserByName(username);
+		int code = new Random().nextInt(999999);
+		if (code < 100000) {
+			code += 100000;
+		}
+		System.err.println(username + "-" + email);
+		HttpSession session = request.getSession();
+		PrintWriter writer = response.getWriter();
+		if (findUserByName != null) {
+			if (findUserByName.getUserEmail().equals(email)) {
+				session.setAttribute("code", code);
+				session.setAttribute("user", findUserByName);
+				service.resetPwd(email, code);
+				writer.println(0);
+			}
+		} else {
+			writer.println("账号错误");
+		}
+		writer.flush();
+		writer.close();
+	}
+
+	/**
+	 * 邮箱验证
+	 * 
+	 * @param code
+	 * @param request
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	@RequestMapping("checkcode")
+	public ModelAndView checkCode(@RequestParam("code") String code, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Integer code1 = (Integer) session.getAttribute("code");
+		String codes = code1.toString();
+		System.err.println("验证码：" + code1 + "-" + code + "-" + (code.equals(codes)));
+		if (code1 != null) {
+			if (code.equals(codes)) {
+				return new ModelAndView("/resetpwd");
+			} else {
+				return new ModelAndView("/sendemail").addObject("msg", "验证码错误");
+			}
+		} else {
+			return new ModelAndView("/sendemail").addObject("msg", "验证码不存在");
+		}
+	}
+
+	@RequestMapping("resetpwd")
+	public ModelAndView resetPwd(@RequestParam("newpwd") String newpwd, @RequestParam("newpwd1") String newpwd1,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (newpwd != null && newpwd1 != null && newpwd.equals(newpwd1)) {
+			User user = (User) session.getAttribute("user");
+			user.setPassword(Sha.getResult(user.getUserName() + newpwd));
+			service.updatePwd(user); 
+		} else {
+			session.setAttribute("msg", "密码输入错误");
+		}
+		return new ModelAndView("/login");
 	}
 }

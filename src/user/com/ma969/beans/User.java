@@ -22,8 +22,9 @@ public class User implements Serializable {
 	private String userBirthday;
 	private String userAddress;
 	private String userPhone;
+	private String userEmail;
 	private String userCompany;
-	private int ustate; 
+	private int ustate;
 	private String createTime;
 	private String lastLoginTime;
 
@@ -63,6 +64,14 @@ public class User implements Serializable {
 		return authDesc;
 	}
 
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
 	public User(int auth, String authDesc, String userName, String password, String name, String userBirthday,
 			String userAddress, String userPhone, String userCompany, int ustate, int state, String createTime,
 			String lastLoginTime) {
@@ -81,22 +90,10 @@ public class User implements Serializable {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	public User(int userId, String userName, String name, String userBirthday, String userAddress, String userPhone,
-			String userCompany) {
+	public User(int auth,String userName, String password, String name, String userBirthday,
+			String userAddress, String userPhone, String userEmail, String userCompany) {
 		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.name = name;
-		this.userBirthday = userBirthday;
-		this.userAddress = userAddress;
-		this.userPhone = userPhone;
-		this.userCompany = userCompany;
-	}
-
-	public User(int auth, String userName, String password, String name, String userBirthday, String userAddress,
-			String userPhone, String userCompany) {
-		super();
-		this.auth = auth;
+		this.auth = auth; 
 		this.userName = userName;
 		this.password = password;
 		this.name = name;
@@ -104,6 +101,59 @@ public class User implements Serializable {
 		this.userAddress = userAddress;
 		this.userPhone = userPhone;
 		this.userCompany = userCompany;
+		this.userEmail = userEmail;
+	}
+
+	public User(int userId, String userName, String name, String userBirthday, String userAddress, String userPhone,
+			String userEmail, String userCompany) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.name = name;
+		this.userBirthday = userBirthday;
+		this.userAddress = userAddress;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+		this.userCompany = userCompany;
+	}
+
+	public User(int userId, int auth, String authDesc, String userName, String password, String name,
+			String userBirthday, String userAddress, String userPhone, String userEmail, String userCompany, int ustate,
+			String createTime, String lastLoginTime) {
+		super();
+		this.userId = userId;
+		this.auth = auth;
+		this.authDesc = authDesc;
+		this.userName = userName;
+		this.password = password;
+		this.name = name;
+		this.userBirthday = userBirthday;
+		this.userAddress = userAddress;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+		this.userCompany = userCompany;
+		this.ustate = ustate;
+		this.createTime = createTime;
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	public User(int auth, String authDesc, String userName, String password, String name, String userBirthday,
+			String userAddress, String userPhone, String userEmail, String userCompany, int ustate, String createTime,
+			String lastLoginTime) {
+		super();
+		this.auth = auth;
+		this.authDesc = authDesc;
+		this.userName = userName;
+		this.password = password;
+		this.name = name;
+		this.userBirthday = userBirthday;
+		this.userAddress = userAddress;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+		this.userCompany = userCompany;
+		this.ustate = ustate;
+		this.createTime = createTime;
+		this.lastLoginTime = lastLoginTime;
 	}
 
 	public User(String userName, String name, String userBirthday, String userAddress, String userPhone,

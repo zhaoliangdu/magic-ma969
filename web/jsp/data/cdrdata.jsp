@@ -134,43 +134,43 @@
 			<ul id="menu"> 
 						<li>当前第${pageNo }页&nbsp;共${count}条/${pageNum }页</li>
 						<li><a  
-							href="${pageContext.servletContext.contextPath }/cdrdata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+							href="${pageContext.servletContext.contextPath }/datapoint/cdrdata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
 							pageNo="0"> 首页 </a></li>
 						<c:if test="${pageNo-1 <=0}">
 							<li><a  
-								href="${pageContext.servletContext.contextPath }/cdrdata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}">
+								href="${pageContext.servletContext.contextPath }/datapoint/cdrdata?pageNo=1&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}">
 									上一页 </a></li>
 						</c:if>
 						<c:if test="${pageNo-1>0}">
 							<li><a  
-								href="${pageContext.servletContext.contextPath }/cdrdata?pageNo=${pageNo-1 }&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+								href="${pageContext.servletContext.contextPath }/datapoint/cdrdata?pageNo=${pageNo-1 }&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
 								pageNo="${pageNo-1 }"> 上一页 </a></li>
 						</c:if>
 						<c:forEach begin="${sta }" end="${end }" var="er">
 							<c:if test="${pageNo==er }">
 								<li class="active"><a  
-									href="${pageContext.servletContext.contextPath }/cdrdata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+									href="${pageContext.servletContext.contextPath }/datapoint/cdrdata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
 									pageNo="${er }"> ${er } </a></li>
 							</c:if>
 							<c:if test="${pageNo!=er }">
 								<li class=""><a  
-									href="${pageContext.servletContext.contextPath }/cdrdata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+									href="${pageContext.servletContext.contextPath }/datapoint/cdrdata?pageNo=${er}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
 									pageNo="${er }"> ${er } </a></li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${pageNo+1 >pageNum}">
 							<li><a  
-								href="${pageContext.servletContext.contextPath }/cdrdata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+								href="${pageContext.servletContext.contextPath }/datapoint/cdrdata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
 								pageNo="${pageNum }"> 下一页 </a></li>
 						</c:if>
 						<c:if test="${pageNo+1<=pageNum}">
 							<li><a  
-								href="${pageContext.servletContext.contextPath }/cdrdata?pageNo=${pageNo+1}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+								href="${pageContext.servletContext.contextPath }/datapoint/cdrdata?pageNo=${pageNo+1}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
 								pageNo="${pageNo+1 })"> 下一页 </a></li>
 
 						</c:if>
 						<li><a  
-							href="${pageContext.servletContext.contextPath }/cdrdata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
+							href="${pageContext.servletContext.contextPath }/datapoint/cdrdata?pageNo=${pageNum}&startTime=${stTime}&endTime=${enTime}&area=${sareas}&testModeId=${stestModes}&frequency=${sfrequencys}&pageNumr=${pageNumr}"
 							pageNo="${pageNum})"> 尾页 </a></li> 
 			</ul>
 		</div>

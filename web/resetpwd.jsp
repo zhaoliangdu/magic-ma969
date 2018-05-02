@@ -31,36 +31,33 @@
 	<br>
 	<div class="login-box">
 		<form class="layui-form layui-form-pane"
-			action='${pageContext.servletContext.contextPath}/userlogin'
+			action='${pageContext.servletContext.contextPath}/resetpwd'
 			method="post">
-			<h3>登录你的帐号</h3>
-			<span style="color: red;">${ loginmsg}</span> <label
-				class="login-title" for="username">帐号</label>
+			<h3>修改密码</h3>
+			<label class="login-title">输入新密码</label>
 			<div class="layui-form-item">
 				<label class="layui-form-label login-form"><i
 					class="iconfont">&#xe6b8;</i></label>
 				<div class="layui-input-inline login-inline">
-					<input type="text" name="username" lay-verify="required"
-						placeholder="请输入你的帐号" autocomplete="off" class="layui-input">
+					<input type="password" name="newpwd" lay-verify="required"
+						placeholder="请输入新密码" required="required" autocomplete="off"
+						class="layui-input" id="newpwd">
 				</div>
 			</div>
-			<label class="login-title" for="password">密码</label>
+			<label class="login-title">再输入一次</label>
 			<div class="layui-form-item">
 				<label class="layui-form-label login-form"><i
 					class="iconfont">&#xe82b;</i></label>
 				<div class="layui-input-inline login-inline">
-					<input type="password" name="password" lay-verify="required"
-						placeholder="请输入你的密码" autocomplete="off" class="layui-input">
+					<input type="password" name="newpwd1" id="newpwd1"
+						lay-verify="required" placeholder="请再输入一次" autocomplete="off"
+						class="layui-input">
 				</div>
 			</div>
 			<div class="form-actions">
-				<button class="pull-right layui-btn" lay-submit lay-filter="login"
-					type="submit">登录</button>
-				<a class="pull-right layui-btn" href="sendemail.jsp">忘记密码
-					</a>
+				<button class="pull-right layui-btn" type="submit">提交</button>
 			</div>
 		</form>
-	</div>
-
+	</div> 
 </body>
 </html>

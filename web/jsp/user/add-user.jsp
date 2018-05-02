@@ -75,6 +75,14 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
+			<label class="layui-form-label">邮箱地址：</label>
+			<div class="layui-input-inline">
+				<input class="layui-input required" required placeholder="请输入邮箱"
+					type="email" name="userEmail" id="userEmail" style="width: 200px;"
+					id="userEmail" value="${email }" pattern="[a-Z][0-9]@[a-Z][0-9].com" />
+			</div>
+		</div>
+		<div class="layui-form-item">
 			<label for="L_email" class="layui-form-label">所属单位：</label>
 			<div class="layui-input-inline">
 				<input class="layui-input required" placeholder="请输入单位" type="text"

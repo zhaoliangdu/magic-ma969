@@ -27,6 +27,7 @@
 					<th>联系地址</th>
 					<th>出生日期</th>
 					<th>联系电话</th>
+					<th>邮箱地址</th>
 					<th>所在单位</th>
 					<th>操作</th>
 				</tr>
@@ -52,6 +53,7 @@
 						<td>${user.userAddress }</td>
 						<td>${user.userBirthday }</td>
 						<td>${user.userPhone }</td>
+						<td>${user.userEmail }</td>
 						<td>${user.userCompany }</td>
 						<c:choose>
 							<c:when test="${username==user.userName}">
@@ -108,6 +110,7 @@
 					$("#ubirthday").val(user.userBirthday);
 					$("#uaddress").val(user.userAddress);
 					$("#uphone").val(user.userPhone);
+					 
 					$("#ucompany").val(user.userCompany);
 				} else {
 					alert("用户未找到");

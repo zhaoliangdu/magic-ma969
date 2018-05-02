@@ -86,6 +86,9 @@
 			<mvc:exclude-mapping path="/userlogin" />
 			<mvc:exclude-mapping path="/regist" />
 			<mvc:exclude-mapping path="/resource/**" />
+			<mvc:exclude-mapping path="/sendemail"/>
+			<mvc:exclude-mapping path="/checkcode"/>
+			<mvc:exclude-mapping path="/resetpwd"/>
 			<mvc:exclude-mapping
 				path="/resource/fileupload/**" />
 			<bean class="com.ma969.interceptor.UserInterceptor" />

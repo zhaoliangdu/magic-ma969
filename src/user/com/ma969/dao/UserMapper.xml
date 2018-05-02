@@ -13,6 +13,7 @@
 		<result property="userAddress" column="address" />
 		<result property="userBirthday" column="birthdate" />
 		<result property="userPhone" column="phone" />
+		<result property="userEmail" column="email"/>
 		<result property="userCompany" column="department" />
 		<result property="ustate" column="ustate" /> 
 		<result property="createTime" column="create_time" />
@@ -24,8 +25,8 @@
 	<insert id="addUser" parameterType="com.ma969.beans.User"
 		useGeneratedKeys="true" keyProperty="userId">
 		insert into user
-		(auth,userName,password,name,address,birthdate,phone,department,create_time)
-		values(#{auth},#{userName},#{password},#{name},#{userAddress},#{userBirthday},#{userPhone},#{userCompany},#{createTime});
+		(auth,userName,password,name,address,birthdate,phone,email,department,create_time)
+		values(#{auth},#{userName},#{password},#{name},#{userAddress},#{userBirthday},#{userPhone},#{userEmail},#{userCompany},#{createTime});
 	</insert>
 	<select id="countOnline" resultType="int">
 		SELECT COUNT(*) FROM USER
@@ -48,6 +49,7 @@
 			<if test="userAddress!=null or userAddress!=''">address=#{userAddress},</if>
 			<if test="userBirthday!=null or userBirthday!=''">birthdate=#{userBirthday},</if>
 			<if test="userPhone!=null or userPhone!=''">phone=#{userPhone},</if>
+			<if test="userEmail!=null or userEmail!=''">email=#{userEmail},</if>
 			<if test="userCompany!=null or userCompany!=''">department=#{userCompany}</if>
 		</trim>
 		where id = #{userId};

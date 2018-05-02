@@ -13,8 +13,7 @@
 		</fieldset>
 		<!-- 右侧内容框架，更改从这里开始 -->
 		<xblock>
-		<div class="layui-form-item layui-form">
-
+		<div class="layui-form-item layui-form"> 
 			<form
 				action="${pageContext.servletContext.contextPath }/media/addvideo"
 				enctype="multipart/form-data" method="post" id="videofrom"
@@ -25,7 +24,7 @@
 				</div>
 				<div class="layui-input-inline">
 					<input class="layui-input" type="file" name="filename" required
-						accept=".mp4" id="videofile" id="videofile" />
+						accept="" id="videofile" />
 				</div>
 				<div class="layui-input-inline">
 					<input type="submit" class="layui-btn layui-btn-normal" value="上传"
@@ -76,8 +75,7 @@
 			</tbody>
 		</table>
 		<input id="videoview" hidden="hidden"
-			value="${pageContext.servletContext.contextPath }/meida/videoma" />
-
+			value="${pageContext.servletContext.contextPath }/media/videoma" />
 
 
 		<!-- 右侧内容框架，更改从这里结束 -->

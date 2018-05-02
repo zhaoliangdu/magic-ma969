@@ -228,7 +228,6 @@
 												});
 								bingmap.entities.push( pushpins[a]);
 							}
-
 						} else {
 							alert('请在chrome、safari、IE8+以上浏览器查看本示例');
 						}

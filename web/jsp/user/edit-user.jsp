@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="../../resource/resource.jsp"></jsp:include>
-<center> 
+<center>
 	<span style="color: red; font-size: 1.5em;">${updumessage }</span>
 	<form class="layui-form" method="post" id="registform"
 		action="${pageContext.servletContext.contextPath }/user/updateUser">
@@ -43,8 +43,7 @@
 			<label class="layui-form-label">出生日期：</label>
 			<div class="layui-input-inline">
 				<input type="date" class="layui-input required" name="userBirthday"
-					required id="date_s" max="2000-03-29"
-					value="${user.userBirthday }" />
+					required id="date_s" max="2000-03-29" value="${user.userBirthday }" />
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -61,6 +60,14 @@
 				<input class="layui-input required" required placeholder="请输入电话"
 					type="tel" name="userPhone" id="userPhone" pattern="1[34578]\d{9}"
 					value="${user.userPhone }" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">邮箱地址：</label>
+			<div class="layui-input-inline">
+				<input class="layui-input required" required placeholder="请输入邮箱"
+					type="email" name="userEmail" id="userEmail"
+					pattern="[a-Z][0-9]@[a-Z][0-9].com" value="${user.userEmail }" />
 			</div>
 		</div>
 		<div class="layui-form-item">

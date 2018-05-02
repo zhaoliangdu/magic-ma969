@@ -52,7 +52,7 @@
                     <input type="button" onclick="startscreen()" class="layui-btn"
                            value="动态显示" id="srun"/><input type="button" class="layui-btn "
                                                           value="全屏"
-                                                          onclick="fullscreen('台站信息','${pageContext.servletContext.contextPath}/fullscreen','1900','950')"/>&nbsp;&nbsp;<input
+                                                          onclick="fullscreen('台站信息','${pageContext.servletContext.contextPath}/emitter/fullscreen','1900','950')"/>&nbsp;&nbsp;<input
                         type="checkbox" onclick="showTransmitByMap()" id="traninmap"
                         lay-skin="primary"/>&nbsp;显示台站
                     <hr>

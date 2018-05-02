@@ -173,6 +173,7 @@ public class UserService {
 	 * @param code
 	 */
 	public void resetPwd(String emailaddress, int code) {
+		System.err.println("开始发送邮件" + emailaddress + "-验证码：" + code);
 		try {
 			Properties properties = new Properties();
 
@@ -198,18 +199,18 @@ public class UserService {
 
 			// 设置发件人邮箱地址
 
-			message.setFrom(new InternetAddress("529989217@qq.com"));
+			message.setFrom(new InternetAddress("zhaoliangdu@qq.com"));
 
 			// 设置收件人地址
 			message.setRecipients(RecipientType.TO, new InternetAddress[] { new InternetAddress(emailaddress) });
 
 			// 设置邮件标题
 
-			message.setSubject("这是一封Java发送的验证码邮件");
+			message.setSubject("这是一封Ma969发送的验证码邮件");
 
 			// 设置邮件内容
 
-			message.setText("内容为： 这是一封java发送来的邮件。验证码：" + code + "。不需要回复");
+			message.setText("内容为： 这是一封Ma969发送来的验证邮件。验证码：" + code + "。不需要回复");
 
 			// 得到邮差对象
 
@@ -217,10 +218,11 @@ public class UserService {
 
 			// 连接自己的邮箱账户
 
-			transport.connect("529989217@qq.com", "okywfygufdxjcabc");// 密码为刚才得到的授权码
+			transport.connect("zhaoliangdu@qq.com", "okywfygufdxjcabc");// 密码为刚才得到的授权码
 
 			// 发送邮件
 			transport.sendMessage(message, message.getAllRecipients());
+			System.err.println("邮件发送成功！");
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -230,7 +232,6 @@ public class UserService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
+		} 
 	}
 }

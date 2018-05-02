@@ -9,7 +9,7 @@
 <meta name="format-detection" content="telephone=yes">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>宝盈科技车载移动数据云端在线管理系统和数据分析管理软件【MA969YDYZM-S】V1.0</title>
+<title>便携式车载调频场强仪MA323FM</title>
 <jsp:include page="../resource/resource.jsp"></jsp:include>
 <script>
 	//显示当前时间
@@ -20,7 +20,6 @@
 	setInterval("startTime()", 500);
 </script>
 <style>
-
 progress {
 	display: inline-block;
 	width: 160px;
@@ -94,7 +93,7 @@ progress::-webkit-progress-value {
 	<!-- 顶部开始 -->
 	<div class="container">
 		<div class="logo">
-			<a href="${pageContext.servletContext.contextPath }/index">宝盈科技车载移动数据云端在线管理系统和数据分析管理软件【MA969YDYZM-S】V1.0</a><img
+			<a href="${pageContext.servletContext.contextPath }/index">便携式车载调频场强仪MA323FM</a><img
 				src="${pageContext.servletContext.contextPath }/resource/images/logo.gif" title="北京宝盈科技" />
 		</div>
 		<div class="open-nav">
@@ -112,7 +111,7 @@ progress::-webkit-progress-value {
 						<a href="${pageContext.servletContext.contextPath }/systemset/getsystemset?typeId=0">设置</a>
 					</dd>
 					<dd>
-						<a href="${pageContext.servletContext.contextPath }/user/userlogout">退出</a>
+						<a href="#" onclick="isout()">退出</a>
 					</dd>
 				</dl></li>
 		</ul>
@@ -169,5 +168,13 @@ progress::-webkit-progress-value {
 		/*-修改*/
 		function updateUser(title, url, w, h) {
 			x_admin_show(title, url, w, h);
+		}
+		
+		function isout(){
+			if(window.confirm("确定退出吗？")){
+				window.location.href="${pageContext.servletContext.contextPath }/userlogout"
+			}else{
+				return false;
+			}
 		}
 	</script>

@@ -69,52 +69,58 @@
 		pitchEnable : true,
 		expandZoomRange : true,
 		zoom : 4,
-		center : [ 106.001, 37.2000 ]
+		center : [ 106.001, 30.2000 ]
 	});
 	var clickEventListener = map.on('mousemove', function(e) {
 		document.getElementById("lnglat").innerHTML = "经度："
 				+ e.lnglat.getLng().toFixed(4) + ',纬度：'
 				+ e.lnglat.getLat().toFixed(4)
 	});
-	$("<div id='lnglat' ></div>").appendTo($("#container"));
-	AMap.event.addDomListener(document.getElementById('gdcheck'), 'click',
-			function() {
-				map.remove(markers);
-			}, false);
+	$("<div id='lnglat'></div>").appendTo($("#container"));
+
 	var markers = [], positions = [];
 
 	function gdcheck() {
 		var gdck = document.getElementById("gdcheck").checked;
 		if (gdck) {
-			$.ajax({
-				url : "${pageContext.servletContext.contextPath }/emitter/gettranlocation",
-				type : "post",
-				success : function(tran) {
-					var infoWindow = new AMap.InfoWindow({
-						offset : new AMap.Pixel(0, -30)
+			$
+					.ajax({
+						url : "${pageContext.servletContext.contextPath }/emitter/gettranlocation",
+						type : "post",
+						success : function(tran) {
+							var infoWindow = new AMap.InfoWindow({
+								offset : new AMap.Pixel(0, -30)
+							});
+							for (var i = 0; i < tran.length; i++) {
+								markers[i] = new AMap.Marker({
+									map : map,
+									position : [ tran[i].longitude,
+											tran[i].latitude ]
+								});
+								markers[i].setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+									offset : new AMap.Pixel(18, 0),//修改label相对于maker的位置
+									content : tran[i].tName
+								});
+								markers[i].content = "地区：" + tran[i].area
+										+ "<br>" + "经度：" + tran[i].longitude
+										+ ",纬度：" + tran[i].latitude + "<br>"
+										+ "高度：" + tran[i].height + "<br>"
+										+ "负责人：" + tran[i].supervisor + "<br>"
+										+ "测试人员：" + tran[i].testPeople;
+								markers[i].on('click', markerClick);
+							}
+							function markerClick(e) {
+								infoWindow.setContent(e.target.content);
+								infoWindow.open(map, e.target.getPosition());
+							}
+						}
 					});
-					for (var i = 0; i < tran.length; i++) {
-						marker = new AMap.Marker({
-							map : map,
-							position : [ tran[i].longitude, tran[i].latitude ]
-						});
-						marker.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
-							offset : new AMap.Pixel(18, 0),//修改label相对于maker的位置
-							content : tran[i].tName
-						});
-						marker.content = "地区：" + tran[i].area + "<br>" + "经度："
-								+ tran[i].longitude + ",纬度：" + tran[i].latitude
-								+ "<br>" + "高度：" + tran[i].height + "<br>"
-								+ "负责人：" + tran[i].supervisor + "<br>"
-								+ "测试人员：" + tran[i].testPeople;
-						marker.on('click', markerClick);
-					}
-					function markerClick(e) {
-						infoWindow.setContent(e.target.content);
-						infoWindow.open(map, e.target.getPosition());
-					}
-				}
-			});
+		} else {
+
+			AMap.event.addDomListener(document.getElementById('gdcheck'),
+					'click', function() {
+						map.remove(markers);
+					}, false);
 		}
 	}
 	var ruler1, ruler2;
@@ -199,8 +205,8 @@
 	//加载采样点
 	function addgpoints() {
 		$('<div id="loadingTip">加载数据，请稍候...</div>').appendTo($("#container"));
-		testmodeId = $("#testmodeId").val(); 
-		 
+		testmodeId = $("#testmodeId").val();
+
 		$
 				.ajax({
 					url : "${pageContext.servletContext.contextPath }/datapoint/getpoints",
@@ -211,12 +217,12 @@
 						"typeId" : 0
 					},
 					success : function(val) {
-						var colorArray  = val[2];
+						var colorArray = val[2];
 						$("#loadingTip").empty();
 						$(
 								'<div id="loadingTip" style="background-color:#6699ff">加载完成!</div>')
 								.appendTo($("#container"));
-						setTimeout("$('#loading').remove()", 3000);
+
 						AMapUI.load([ 'ui/misc/PointSimplifier', 'lib/utils',
 								'lib/$' ], function(PointSimplifier, utils, $) {
 
